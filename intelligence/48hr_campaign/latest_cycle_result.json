@@ -1,0 +1,20 @@
+{
+  "cycle": 1,
+  "sms_sent": 5040,
+  "sms_delivered": 4840,
+  "responses": 231,
+  "hot_leads": 109,
+  "warm_leads": 65,
+  "demos_booked": 37,
+  "demos_confirmed": 26,
+  "deals_sourced": 9,
+  "hot_deals": 6,
+  "owner_finance_deals": 2,
+  "confirmed_revenue_usd": 22708,
+  "pipeline_value_usd": 41857,
+  "content_pieces": 105,
+  "markets": 15,
+  "platforms": 7,
+  "timestamp": "2026-04-02T17:54:53.750958",
+  "log_file": "/home/ubuntu/CEO-Mr-Reddix/intelligence/48hr_campaign/cycle_001_20260402_175453.json"
+}
