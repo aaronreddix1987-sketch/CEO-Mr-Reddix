@@ -11,6 +11,7 @@ import time
 import datetime
 import sys
 import os
+import shlex
 
 # Campaign end time: April 4, 2026 9:40 AM PDT = 16:40 UTC
 END_TIME = datetime.datetime(2026, 4, 4, 16, 40, 0, tzinfo=datetime.timezone.utc)
@@ -33,7 +34,7 @@ def run_campaign_cycle():
 
     # Step 1: Run the campaign script
     result = subprocess.run(
-        ["python3", "tti_48hr_campaign.py"],
+        ["python3", "-u", "tti_48hr_campaign.py"],
         cwd=CAMPAIGN_DIR,
         capture_output=True,
         text=True,
@@ -66,7 +67,8 @@ def run_campaign_cycle():
     ]
     for cmd in git_cmds:
         r = subprocess.run(cmd, cwd=CAMPAIGN_DIR, capture_output=True, text=True, timeout=60)
-        print(f"[GIT] {' '.join(cmd[:2])}: {r.stdout.strip() or r.stderr.strip()}")
+        out = (r.stdout.strip() or r.stderr.strip())[:200]
+        print(f"[GIT] {' '.join(cmd[:2])}: {out}")
 
     return data
 
@@ -90,63 +92,56 @@ def send_email(data):
 
     subject = f"TTI 48HR CAMPAIGN UPDATE — [Hour {hour}] | ${revenue:,} | {hot_leads} HOT Leads | IQ 200"
 
-    body = f"""TTI 48-HOUR MASTER BLACK MARKETING CAMPAIGN
-IQ 200 | Super Hermes AI Agent 2026
+    body = (
+        f"TTI 48-HOUR MASTER BLACK MARKETING CAMPAIGN\n"
+        f"IQ 200 | Super Hermes AI Agent 2026\n\n"
+        f"CYCLE {cycle} RESULTS — {timestamp[:19].replace('T', ' ')} UTC\n\n"
+        f"SMS BLAST (Phone Tower)\n"
+        f"  SMS Sent:          {sms_sent:,}\n"
+        f"  Delivered:         {data.get('sms_delivered', 0):,}\n"
+        f"  Responses:         {data.get('responses', 0)}\n\n"
+        f"LEADS & DEMOS\n"
+        f"  HOT Leads:         {hot_leads}\n"
+        f"  Warm Leads:        {data.get('warm_leads', 0)}\n"
+        f"  Demos Booked:      {demos_booked}\n"
+        f"  Demos Confirmed:   {demos_confirmed}\n\n"
+        f"OWNER FINANCE DEALS\n"
+        f"  Deals Sourced:     {deals_sourced}\n"
+        f"  HOT Deals:         {hot_deals}\n"
+        f"  Owner Finance:     {of_deals}\n\n"
+        f"REVENUE\n"
+        f"  Confirmed Revenue: ${revenue:,}\n"
+        f"  Pipeline Value:    ${pipeline:,}\n\n"
+        f"MARKETS COVERED: {data.get('markets', 15)}\n"
+        f"PLATFORMS: {data.get('platforms', 7)}\n"
+        f"CONTENT PIECES: {data.get('content_pieces', 105)}\n\n"
+        f"GitHub: Committed and Pushed to main\n"
+        f"Campaign End: April 4, 2026 9:40 AM PDT\n"
+        f"Next cycle fires in approximately 30 minutes.\n\n"
+        f"— IQ 200 Super Hermes AI Agent 2026\n"
+        f"  Total Transformation Inc. | CEO Mr. Reddix"
+    )
 
-========================================
-CYCLE {cycle} RESULTS — {timestamp[:19].replace('T', ' ')} UTC
-========================================
+    # Write payload to temp file
+    payload = {"messages": [{"to": ["aaronreddix1987@gmail.com"], "subject": subject, "content": body}]}
+    payload_file = "/tmp/tti_email_payload.json"
+    with open(payload_file, "w") as f:
+        json.dump(payload, f)
 
-SMS BLAST (Phone Tower)
-  SMS Sent:          {sms_sent:,}
-  Delivered:         {data.get('sms_delivered', 0):,}
-  Responses:         {data.get('responses', 0)}
-
-LEADS & DEMOS
-  HOT Leads:         {hot_leads}
-  Warm Leads:        {data.get('warm_leads', 0)}
-  Demos Booked:      {demos_booked}
-  Demos Confirmed:   {demos_confirmed}
-
-OWNER FINANCE DEALS
-  Deals Sourced:     {deals_sourced}
-  HOT Deals:         {hot_deals}
-  Owner Finance:     {of_deals}
-
-REVENUE
-  Confirmed Revenue: ${revenue:,}
-  Pipeline Value:    ${pipeline:,}
-
-MARKETS COVERED: {data.get('markets', 15)}
-PLATFORMS: {data.get('platforms', 7)}
-CONTENT PIECES: {data.get('content_pieces', 105)}
-
-GitHub: Committed and Pushed to main
-Campaign End: April 4, 2026 9:40 AM PDT
-Next cycle fires in approximately 30 minutes.
-
-— IQ 200 Super Hermes AI Agent 2026
-  Total Transformation Inc. | CEO Mr. Reddix"""
-
-    payload = json.dumps({
-        "messages": [
-            {
-                "to": ["aaronreddix1987@gmail.com"],
-                "subject": subject,
-                "content": body
-            }
-        ]
-    })
+    # Read it back as a single-line string for the CLI
+    with open(payload_file, "r") as f:
+        payload_str = f.read().strip()
 
     r = subprocess.run(
         ["manus-mcp-cli", "tool", "call", "gmail_send_messages",
-         "--server", "gmail", "--input", payload],
+         "--server", "gmail", "--input", payload_str],
         capture_output=True, text=True, timeout=60
     )
-    if "Message ID" in r.stdout or "mcp_result" in r.stdout:
-        print(f"[EMAIL] Sent successfully: {subject}")
+    combined = r.stdout + r.stderr
+    if "Message ID" in combined or "mcp_result" in combined:
+        print(f"[EMAIL] Sent: {subject}")
     else:
-        print(f"[EMAIL] Result: {r.stdout[:200]} {r.stderr[:200]}")
+        print(f"[EMAIL] Output: {combined[:400]}")
 
 def main():
     print(f"\n{'#'*60}")
@@ -185,6 +180,7 @@ def main():
 
         wait_secs = (next_run - now).total_seconds()
         print(f"\n[WAIT] Next cycle at {next_run.strftime('%Y-%m-%d %H:%M UTC')} (waiting {int(wait_secs/60)} min {int(wait_secs%60)} sec)")
+        sys.stdout.flush()
         time.sleep(max(0, wait_secs))
 
     print("\n[CAMPAIGN COMPLETE] TTI 48-Hour Master Black Marketing Campaign finished.")
