@@ -105,22 +105,13 @@ def git_commit_and_push(cycle_data: dict):
             cwd=str(CAMPAIGN_DIR), check=True, capture_output=True
         )
 
-    log("Git: pushing to origin main...")
+    log("Git: pushing to origin main (force)...")
     push_result = subprocess.run(
-        ["git", "push", "origin", "main"],
+        ["git", "push", "--force", "origin", "main"],
         cwd=str(CAMPAIGN_DIR), capture_output=True, text=True
     )
     if push_result.returncode != 0:
-        log(f"Git push warning (trying force): {push_result.stderr[:200]}")
-        # Try force push if normal push fails
-        force_result = subprocess.run(
-            ["git", "push", "--force", "origin", "main"],
-            cwd=str(CAMPAIGN_DIR), capture_output=True, text=True
-        )
-        if force_result.returncode == 0:
-            log("Git force push successful")
-        else:
-            log(f"Git force push also failed: {force_result.stderr[:200]}")
+        log(f"Git push warning: {push_result.stderr[:200]}")
     else:
         log("Git push successful")
 

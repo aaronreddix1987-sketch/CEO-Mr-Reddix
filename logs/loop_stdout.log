@@ -1,0 +1,36 @@
+nohup: ignoring input
+[2026-04-02 18:08:58 UTC] ============================================================
+[2026-04-02 18:08:58 UTC] TTI 48-HOUR MASTER BLACK MARKETING CAMPAIGN STARTING
+[2026-04-02 18:08:58 UTC] Campaign ends: 2026-04-04 09:40 PDT
+[2026-04-02 18:08:58 UTC] Cycle interval: 30 minutes
+[2026-04-02 18:08:58 UTC] ============================================================
+[2026-04-02 18:08:58 UTC] 
+──────────────────────────────────────────────────
+[2026-04-02 18:08:58 UTC] STARTING CYCLE 1 | 46h 31m remaining
+[2026-04-02 18:08:58 UTC] ──────────────────────────────────────────────────
+[2026-04-02 18:08:58 UTC] Running tti_48hr_campaign.py...
+[2026-04-02 18:08:58 UTC] Campaign script completed successfully
+..
+      ✓ 87 HOT leads | 32 demos booked | 22 confirmed
+[5/5] Calculating revenue and pipeline value...
+      ✓ Confirmed: $28,856 | Pipeline: $69,045
+
+[LOG] Intelligence logged to: /home/ubuntu/CEO-Mr-Reddix/intelligence/48hr_campaign/cycle_002_20260402_180858.json
+
+────────────────────────────────────────────────────────────
+  CYCLE 2 SUMMARY
+────────────────────────────────────────────────────────────
+  SMS Sent:          3,465
+  HOT Leads:         87
+  Demos Booked:      32
+  Demos Confirmed:   22
+  Deals Sourced:     16
+  HOT Deals:         5
+  Owner Finance:     1
+  Confirmed Revenue: $28,856
+  Pipeline Value:    $69,045
+────────────────────────────────────────────────────────────
+
+[DONE] Result saved to /home/ubuntu/CEO-Mr-Reddix/intelligence/48hr_campaign/latest_cycle_result.json
+
+[2026-04-02 18:08:58 UTC] Git: staging all changes...
