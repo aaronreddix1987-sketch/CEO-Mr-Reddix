@@ -18,3 +18,4 @@
 {"cycle": 19, "timestamp": "2026-04-02T20:09:07.893795", "confirmed_revenue_usd": 15050, "pipeline_value_usd": 60503, "hot_leads": 84, "demos_booked": 39, "sms_sent": 4635}
 {"cycle": 20, "timestamp": "2026-04-02T20:23:04.604625", "confirmed_revenue_usd": 10064, "pipeline_value_usd": 98060, "hot_leads": 136, "demos_booked": 61, "sms_sent": 4785}
 {"cycle": 21, "timestamp": "2026-04-02T20:24:22.534117", "confirmed_revenue_usd": 0, "pipeline_value_usd": 71147, "hot_leads": 57, "demos_booked": 24, "sms_sent": 3690}
+{"cycle": 23, "timestamp": "2026-04-02T20:39:55.272233", "confirmed_revenue_usd": 0, "pipeline_value_usd": 32944, "hot_leads": 57, "demos_booked": 22, "sms_sent": 3690}
