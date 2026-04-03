@@ -38,3 +38,13 @@
 {"cycle": 41, "timestamp": "2026-04-03T11:28:55.748244", "confirmed_revenue_usd": 0, "pipeline_value_usd": 98764, "hot_leads": 97, "demos_booked": 44, "sms_sent": 4980}
 {"cycle": 42, "timestamp": "2026-04-03T11:28:55.783332", "confirmed_revenue_usd": 10554, "pipeline_value_usd": 71931, "hot_leads": 61, "demos_booked": 32, "sms_sent": 4740}
 {"cycle": 43, "timestamp": "2026-04-03T11:28:55.818726", "confirmed_revenue_usd": 11955, "pipeline_value_usd": 41320, "hot_leads": 84, "demos_booked": 32, "sms_sent": 3345}
+{"cycle": 44, "timestamp": "2026-04-03T11:37:00.837345", "confirmed_revenue_usd": 16353, "pipeline_value_usd": 89923, "hot_leads": 98, "demos_booked": 44, "sms_sent": 4785}
+{"cycle": 45, "timestamp": "2026-04-03T11:37:00.875264", "confirmed_revenue_usd": 0, "pipeline_value_usd": 106476, "hot_leads": 62, "demos_booked": 21, "sms_sent": 4395}
+{"cycle": 46, "timestamp": "2026-04-03T11:37:00.913609", "confirmed_revenue_usd": 0, "pipeline_value_usd": 97852, "hot_leads": 48, "demos_booked": 26, "sms_sent": 3300}
+{"cycle": 47, "timestamp": "2026-04-03T11:37:00.957658", "confirmed_revenue_usd": 9964, "pipeline_value_usd": 93417, "hot_leads": 146, "demos_booked": 46, "sms_sent": 4995}
+{"cycle": 48, "timestamp": "2026-04-03T11:37:00.996905", "confirmed_revenue_usd": 23012, "pipeline_value_usd": 93489, "hot_leads": 144, "demos_booked": 46, "sms_sent": 5160}
+{"cycle": 49, "timestamp": "2026-04-03T11:37:01.034759", "confirmed_revenue_usd": 0, "pipeline_value_usd": 82308, "hot_leads": 49, "demos_booked": 20, "sms_sent": 3060}
+{"cycle": 50, "timestamp": "2026-04-03T11:37:01.072411", "confirmed_revenue_usd": 32350, "pipeline_value_usd": 41075, "hot_leads": 74, "demos_booked": 35, "sms_sent": 2805}
+{"cycle": 51, "timestamp": "2026-04-03T11:37:01.113031", "confirmed_revenue_usd": 0, "pipeline_value_usd": 108546, "hot_leads": 36, "demos_booked": 14, "sms_sent": 2730}
+{"cycle": 52, "timestamp": "2026-04-03T11:37:01.165165", "confirmed_revenue_usd": 0, "pipeline_value_usd": 67286, "hot_leads": 92, "demos_booked": 48, "sms_sent": 4965}
+{"cycle": 53, "timestamp": "2026-04-03T11:37:01.202672", "confirmed_revenue_usd": 13896, "pipeline_value_usd": 45533, "hot_leads": 84, "demos_booked": 36, "sms_sent": 4725}

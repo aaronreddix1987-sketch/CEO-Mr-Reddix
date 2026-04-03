@@ -1,0 +1,46 @@
+{
+  "cycle": 50,
+  "timestamp": "2026-04-03T11:37:01.071824",
+  "campaign": "TTI 48-Hour Master Black Marketing Campaign",
+  "operator": "IQ 200 Super Hermes AI Agent 2026",
+  "sms_blast": {
+    "blast_id": "PTB-050-047FE2",
+    "cycle": 50,
+    "timestamp": "2026-04-03T11:37:01.071663",
+    "markets_blasted": 15,
+    "total_sms_sent": 2805,
+    "delivered": 2573,
+    "delivery_rate_pct": 91.7,
+    "responses_received": 163,
+    "opt_outs": 22,
+    "status": "FIRED_SUCCESS"
+  },
+  "leads": {
+    "cycle": 50,
+    "total_responses": 163,
+    "hot_leads": 74,
+    "warm_leads": 52,
+    "cold_leads": 37,
+    "demos_booked": 35,
+    "demos_confirmed": 30,
+    "conversion_rate_pct": 45.4,
+    "timestamp": "2026-04-03T11:37:01.071767"
+  },
+  "revenue": {
+    "cycle": 50,
+    "timestamp": "2026-04-03T11:37:01.071779",
+    "deals_in_pipeline": 8,
+    "hot_deals": 5,
+    "closed_this_cycle": 2,
+    "confirmed_revenue_usd": 32350,
+    "pipeline_value_usd": 41075,
+    "projected_30day_usd": 6614,
+    "demos_confirmed": 30,
+    "revenue_per_demo": 1078.33
+  },
+  "deals_sourced": 8,
+  "hot_deals": 5,
+  "content_pieces_generated": 105,
+  "markets_covered": 15,
+  "platforms_covered": 7
+}
