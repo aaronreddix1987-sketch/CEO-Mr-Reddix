@@ -4,41 +4,50 @@
 
 ## Overview
 
-This repository powers the TTI 48-Hour Master Black Marketing Campaign and Owner Finance Cash Hunt. It generates marketing content for 15 markets across 7 platforms, fires Phone Tower SMS blasts, sources owner finance deals, and logs all revenue intelligence.
+This repository powers the TTI 48-Hour Master Black Marketing Campaign and Owner Finance Cash Hunt. It generates marketing content across target markets, logs revenue intelligence, and can run a timed campaign loop that commits cycle output and sends status updates.
 
-## Campaign Parameters
+## What Was Fixed
 
-- **Start:** April 2, 2026 9:40 AM PDT
-- **End:** April 4, 2026 9:40 AM PDT
-- **Cycle Interval:** Every 30 minutes
-- **Markets:** 15 target markets across the US
-- **Platforms:** 7 (Facebook, Instagram, TikTok, YouTube, LinkedIn, Twitter/X, SMS/PhoneTower)
+- Removed hardcoded `/home/ubuntu/...` path assumptions
+- Replaced stale April 2026 hardcoded loop windows with environment-driven scheduling
+- Removed `git push --force` from the main orchestrator
+- Consolidated duplicate loop scripts so they call one maintained runner
+- Kept Gmail status emails optional instead of crashing when the external CLI is unavailable
 
 ## Structure
 
-```
+```text
 CEO-Mr-Reddix/
-├── tti_48hr_campaign.py          # Single cycle execution
-├── run_campaign_loop.py          # 48hr orchestrator loop
+├── tti_48hr_campaign.py      # Single cycle execution
+├── run_campaign_loop.py      # Maintained campaign orchestrator
+├── auto_campaign_loop.py     # Thin wrapper -> run_campaign_loop.main()
+├── auto_48hr_loop.py         # Thin wrapper -> run_campaign_loop.main()
+├── campaign_orchestrator.py  # Thin wrapper -> run_campaign_loop.main()
 ├── intelligence/
-│   └── 48hr_campaign/            # All cycle logs, deal data, revenue ledger
+│   └── 48hr_campaign/        # Cycle logs, deal data, revenue ledger
 └── logs/
-    └── orchestrator.log          # Loop execution log
+    └── orchestrator.log      # Loop execution log
 ```
+
+## Configuration
+
+Environment variables:
+
+- `TTI_CAMPAIGN_START`: ISO timestamp for campaign start
+- `TTI_CAMPAIGN_END`: ISO timestamp for campaign end
+- `TTI_CAMPAIGN_DURATION_HOURS`: defaults to `48` if no explicit end is set
+- `TTI_CYCLE_INTERVAL_SECONDS`: defaults to `1800`
+- `TTI_RECIPIENT_EMAIL`: status email recipient
+
+If no start or end values are provided, the maintained runner starts immediately and uses a 48-hour window.
 
 ## Usage
 
 ```bash
-# Run one cycle manually
-cd /home/ubuntu/CEO-Mr-Reddix && python3 tti_48hr_campaign.py
-
-# Run full 48-hour loop
+python3 tti_48hr_campaign.py
 python3 run_campaign_loop.py
 ```
 
 ## Revenue Tracking
 
 All revenue is logged to `intelligence/48hr_campaign/revenue_ledger.jsonl` with cumulative tracking across all cycles.
-
----
-*Powered by TTI Investments | The Total Investment*
