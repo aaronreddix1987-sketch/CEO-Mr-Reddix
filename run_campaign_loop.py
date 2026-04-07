@@ -1,32 +1,19 @@
 #!/usr/bin/env python3
 """Maintained TTI campaign orchestrator."""
-
 from __future__ import annotations
-
-import datetime
-import json
-import os
-import shutil
-import subprocess
-import sys
-import tempfile
-import time
+import datetime, json, os, shutil, subprocess, sys, tempfile, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
-
 BASE_DIR = Path(__file__).resolve().parent
 INTELLIGENCE_DIR = BASE_DIR / "intelligence" / "48hr_campaign"
 LOGS_DIR = BASE_DIR / "logs"
 CAMPAIGN_SCRIPT = BASE_DIR / "tti_48hr_campaign.py"
 RESULT_FILE = INTELLIGENCE_DIR / "latest_cycle_result.json"
 PDT = ZoneInfo("America/Los_Angeles")
-
 RECIPIENT_EMAIL = os.getenv("TTI_RECIPIENT_EMAIL", "aaronreddix1987@gmail.com")
 CYCLE_INTERVAL_SECONDS = int(os.getenv("TTI_CYCLE_INTERVAL_SECONDS", "1800"))
 CAMPAIGN_DURATION_HOURS = int(os.getenv("TTI_CAMPAIGN_DURATION_HOURS", "48"))
-
-
-def parse_dt(name: str):
+def parse_dt(name):
     raw = os.getenv(name)
     if not raw:
         return None
@@ -34,8 +21,6 @@ def parse_dt(name: str):
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=PDT)
     return dt.astimezone(PDT)
-
-
 def resolve_window():
     now = datetime.datetime.now(tz=PDT)
     start = parse_dt("TTI_CAMPAIGN_START")
@@ -47,40 +32,22 @@ def resolve_window():
     if end and not start:
         return end - datetime.timedelta(hours=CAMPAIGN_DURATION_HOURS), end
     return now, now + datetime.timedelta(hours=CAMPAIGN_DURATION_HOURS)
-
-
 CAMPAIGN_START, CAMPAIGN_END = resolve_window()
-
-
-def log(msg: str):
+def log(msg):
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
-    ts = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
-    line = f"[{ts}] {msg}"
+    line = f"[{datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}] {msg}"
     print(line, flush=True)
     with open(LOGS_DIR / "orchestrator.log", "a") as f:
         f.write(line + "\n")
-
-
-def hours_elapsed_since_start() -> float:
-    now = datetime.datetime.now(tz=PDT)
-    return max(0.0, (now - CAMPAIGN_START).total_seconds() / 3600)
-
-
-def campaign_active() -> bool:
+def hours_elapsed_since_start():
+    return max(0.0, (datetime.datetime.now(tz=PDT) - CAMPAIGN_START).total_seconds() / 3600)
+def campaign_active():
     return datetime.datetime.now(tz=PDT) < CAMPAIGN_END
-
-
-def run_campaign_script() -> dict:
+def run_campaign_script():
     if not CAMPAIGN_SCRIPT.exists():
         raise FileNotFoundError(f"Missing campaign script: {CAMPAIGN_SCRIPT}")
     log(f"Running {CAMPAIGN_SCRIPT.name} ...")
-    result = subprocess.run(
-        [sys.executable, str(CAMPAIGN_SCRIPT)],
-        cwd=str(BASE_DIR),
-        capture_output=True,
-        text=True,
-        timeout=180,
-    )
+    result = subprocess.run([sys.executable, str(CAMPAIGN_SCRIPT)], cwd=str(BASE_DIR), capture_output=True, text=True, timeout=180)
     if result.stdout:
         print(result.stdout[-1200:], flush=True)
     if result.returncode != 0:
@@ -89,16 +56,12 @@ def run_campaign_script() -> dict:
         raise FileNotFoundError(f"Missing result file: {RESULT_FILE}")
     with open(RESULT_FILE) as f:
         return json.load(f)
-
-
-def run_git(*args: str, check: bool = False):
+def run_git(*args, check=False):
     result = subprocess.run(["git", *args], cwd=str(BASE_DIR), capture_output=True, text=True)
     if check and result.returncode != 0:
         raise RuntimeError(result.stderr.strip() or result.stdout.strip() or f"git {' '.join(args)} failed")
     return result
-
-
-def git_commit_and_push(cycle_data: dict):
+def git_commit_and_push(cycle_data):
     revenue = cycle_data.get("confirmed_revenue_usd", 0)
     hot_leads = cycle_data.get("hot_leads", 0)
     cycle_num = cycle_data.get("cycle", "?")
@@ -117,9 +80,7 @@ def git_commit_and_push(cycle_data: dict):
         log(f"Git push warning: {(push.stderr or push.stdout).strip()[:300]}")
     else:
         log("Git push successful")
-
-
-def send_status_email(cycle_data: dict):
+def send_status_email(cycle_data):
     cli = shutil.which("manus-mcp-cli")
     if not cli:
         log("Email skipped: manus-mcp-cli not installed")
@@ -137,41 +98,19 @@ def send_status_email(cycle_data: dict):
     elapsed = hours_elapsed_since_start()
     ts = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
     subject = f"TTI CAMPAIGN UPDATE | Hour {elapsed:.1f} | ${revenue:,} | {hot_leads} HOT Leads"
-    body = (
-        f"TTI CAMPAIGN UPDATE\n\n"
-        f"Cycle: {cycle}\n"
-        f"Timestamp: {ts}\n"
-        f"Hours elapsed: {elapsed:.1f}\n"
-        f"Campaign end: {CAMPAIGN_END.strftime('%Y-%m-%d %H:%M %Z')}\n\n"
-        f"SMS sent: {sms_sent:,}\n"
-        f"HOT leads: {hot_leads}\n"
-        f"Demos booked: {demos_booked}\n"
-        f"Demos confirmed: {demos_confirmed}\n"
-        f"Deals sourced: {deals_sourced}\n"
-        f"HOT deals: {hot_deals}\n"
-        f"Owner finance deals: {owner_finance}\n"
-        f"Confirmed revenue: ${revenue:,}\n"
-        f"Pipeline value: ${pipeline:,}\n"
-    )
+    body = (f"TTI CAMPAIGN UPDATE\n\nCycle: {cycle}\nTimestamp: {ts}\nHours elapsed: {elapsed:.1f}\nCampaign end: {CAMPAIGN_END.strftime('%Y-%m-%d %H:%M %Z')}\n\nSMS sent: {sms_sent:,}\nHOT leads: {hot_leads}\nDemos booked: {demos_booked}\nDemos confirmed: {demos_confirmed}\nDeals sourced: {deals_sourced}\nHOT deals: {hot_deals}\nOwner finance deals: {owner_finance}\nConfirmed revenue: ${revenue:,}\nPipeline value: ${pipeline:,}\n")
     payload = {"messages": [{"to": [RECIPIENT_EMAIL], "subject": subject, "content": body}]}
     with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
         json.dump(payload, f)
         tmp_path = f.name
     try:
-        result = subprocess.run(
-            [cli, "tool", "call", "gmail_send_messages", "--server", "gmail", "--input", Path(tmp_path).read_text()],
-            capture_output=True,
-            text=True,
-            timeout=90,
-        )
+        result = subprocess.run([cli, "tool", "call", "gmail_send_messages", "--server", "gmail", "--input", Path(tmp_path).read_text()], capture_output=True, text=True, timeout=90)
         if result.returncode != 0:
             log(f"Email warning: {(result.stderr or result.stdout).strip()[:300]}")
         else:
             log(f"Email sent for cycle {cycle}")
     finally:
         Path(tmp_path).unlink(missing_ok=True)
-
-
 def send_final_summary():
     ledger = INTELLIGENCE_DIR / "revenue_ledger.jsonl"
     total_revenue = total_hot_leads = total_sms = cycles = 0
@@ -187,8 +126,6 @@ def send_final_summary():
                 total_hot_leads += rec.get("hot_leads", 0)
                 total_sms += rec.get("sms_sent", 0)
     log(f"Campaign complete | cycles={cycles} | sms={total_sms:,} | hot_leads={total_hot_leads} | revenue=${total_revenue:,}")
-
-
 def main():
     log("=" * 60)
     log("TTI CAMPAIGN ORCHESTRATOR STARTING")
@@ -215,7 +152,5 @@ def main():
         time.sleep(sleep_for)
     send_final_summary()
     log("TTI CAMPAIGN ORCHESTRATOR FINISHED")
-
-
 if __name__ == "__main__":
     main()
