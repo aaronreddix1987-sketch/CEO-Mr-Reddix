@@ -48,6 +48,14 @@ python3 tti_48hr_campaign.py
 python3 run_campaign_loop.py
 ```
 
+## Runtime Configuration
+
+- Paths resolve relative to the repo root
+- `TTI_CAMPAIGN_START` / `TTI_CAMPAIGN_END` support ISO timestamps
+- `TTI_CAMPAIGN_DURATION_HOURS` defaults to `48`
+- `TTI_CYCLE_INTERVAL_SECONDS` defaults to `1800`
+- `TTI_RECIPIENT_EMAIL` controls status email delivery
+
 ## Revenue Tracking
 
 All revenue is logged to `intelligence/48hr_campaign/revenue_ledger.jsonl` with cumulative tracking across all cycles.
