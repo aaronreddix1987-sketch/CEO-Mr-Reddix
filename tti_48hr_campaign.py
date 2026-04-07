@@ -208,8 +208,7 @@ def log_intelligence(cycle: int, blast: dict, deals: list, leads: dict, revenue:
             "hot_leads": leads["hot_leads"],
             "demos_booked": leads["demos_booked"],
             "sms_sent": blast["total_sms_sent"],
-        }) + "
-")
+        }) + "\n")
     latest_result = {
         "cycle": cycle,
         "timestamp": datetime.datetime.utcnow().isoformat(),
