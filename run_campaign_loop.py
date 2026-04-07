@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""
-Maintained TTI campaign orchestrator.
-Runs campaign cycles on a configurable timer, commits resulting intelligence,
-and optionally sends status emails.
-"""
+"""Maintained TTI campaign orchestrator."""
 
 from __future__ import annotations
 
@@ -62,8 +58,7 @@ def log(msg: str):
     line = f"[{ts}] {msg}"
     print(line, flush=True)
     with open(LOGS_DIR / "orchestrator.log", "a") as f:
-        f.write(line + "
-")
+        f.write(line + "\n")
 
 
 def hours_elapsed_since_start() -> float:
@@ -78,7 +73,6 @@ def campaign_active() -> bool:
 def run_campaign_script() -> dict:
     if not CAMPAIGN_SCRIPT.exists():
         raise FileNotFoundError(f"Missing campaign script: {CAMPAIGN_SCRIPT}")
-
     log(f"Running {CAMPAIGN_SCRIPT.name} ...")
     result = subprocess.run(
         [sys.executable, str(CAMPAIGN_SCRIPT)],
@@ -98,12 +92,7 @@ def run_campaign_script() -> dict:
 
 
 def run_git(*args: str, check: bool = False):
-    result = subprocess.run(
-        ["git", *args],
-        cwd=str(BASE_DIR),
-        capture_output=True,
-        text=True,
-    )
+    result = subprocess.run(["git", *args], cwd=str(BASE_DIR), capture_output=True, text=True)
     if check and result.returncode != 0:
         raise RuntimeError(result.stderr.strip() or result.stdout.strip() or f"git {' '.join(args)} failed")
     return result
@@ -114,13 +103,11 @@ def git_commit_and_push(cycle_data: dict):
     hot_leads = cycle_data.get("hot_leads", 0)
     cycle_num = cycle_data.get("cycle", "?")
     commit_msg = f"48HR CAMPAIGN CYCLE {cycle_num}: ${revenue:,} revenue | {hot_leads} HOT leads"
-
     run_git("add", "-A", check=True)
     status = run_git("status", "--porcelain")
     if not status.stdout.strip():
         log("Git: nothing new to commit")
         return
-
     run_git("commit", "-m", commit_msg, check=True)
     pull = run_git("pull", "--rebase", "origin", "main")
     if pull.returncode != 0:
@@ -137,7 +124,6 @@ def send_status_email(cycle_data: dict):
     if not cli:
         log("Email skipped: manus-mcp-cli not installed")
         return
-
     cycle = cycle_data.get("cycle", "?")
     revenue = cycle_data.get("confirmed_revenue_usd", 0)
     pipeline = cycle_data.get("pipeline_value_usd", 0)
@@ -150,46 +136,27 @@ def send_status_email(cycle_data: dict):
     owner_finance = cycle_data.get("owner_finance_deals", 0)
     elapsed = hours_elapsed_since_start()
     ts = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
-
     subject = f"TTI CAMPAIGN UPDATE | Hour {elapsed:.1f} | ${revenue:,} | {hot_leads} HOT Leads"
     body = (
-        f"TTI CAMPAIGN UPDATE
-
-"
-        f"Cycle: {cycle}
-"
-        f"Timestamp: {ts}
-"
-        f"Hours elapsed: {elapsed:.1f}
-"
-        f"Campaign end: {CAMPAIGN_END.strftime('%Y-%m-%d %H:%M %Z')}
-
-"
-        f"SMS sent: {sms_sent:,}
-"
-        f"HOT leads: {hot_leads}
-"
-        f"Demos booked: {demos_booked}
-"
-        f"Demos confirmed: {demos_confirmed}
-"
-        f"Deals sourced: {deals_sourced}
-"
-        f"HOT deals: {hot_deals}
-"
-        f"Owner finance deals: {owner_finance}
-"
-        f"Confirmed revenue: ${revenue:,}
-"
-        f"Pipeline value: ${pipeline:,}
-"
+        f"TTI CAMPAIGN UPDATE\n\n"
+        f"Cycle: {cycle}\n"
+        f"Timestamp: {ts}\n"
+        f"Hours elapsed: {elapsed:.1f}\n"
+        f"Campaign end: {CAMPAIGN_END.strftime('%Y-%m-%d %H:%M %Z')}\n\n"
+        f"SMS sent: {sms_sent:,}\n"
+        f"HOT leads: {hot_leads}\n"
+        f"Demos booked: {demos_booked}\n"
+        f"Demos confirmed: {demos_confirmed}\n"
+        f"Deals sourced: {deals_sourced}\n"
+        f"HOT deals: {hot_deals}\n"
+        f"Owner finance deals: {owner_finance}\n"
+        f"Confirmed revenue: ${revenue:,}\n"
+        f"Pipeline value: ${pipeline:,}\n"
     )
     payload = {"messages": [{"to": [RECIPIENT_EMAIL], "subject": subject, "content": body}]}
-
     with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
         json.dump(payload, f)
         tmp_path = f.name
-
     try:
         result = subprocess.run(
             [cli, "tool", "call", "gmail_send_messages", "--server", "gmail", "--input", Path(tmp_path).read_text()],
@@ -207,10 +174,7 @@ def send_status_email(cycle_data: dict):
 
 def send_final_summary():
     ledger = INTELLIGENCE_DIR / "revenue_ledger.jsonl"
-    total_revenue = 0
-    total_hot_leads = 0
-    total_sms = 0
-    cycles = 0
+    total_revenue = total_hot_leads = total_sms = cycles = 0
     if ledger.exists():
         with open(ledger) as f:
             for line in f:
@@ -222,10 +186,7 @@ def send_final_summary():
                 total_revenue += rec.get("confirmed_revenue_usd", 0)
                 total_hot_leads += rec.get("hot_leads", 0)
                 total_sms += rec.get("sms_sent", 0)
-    log(
-        "Campaign complete | "
-        f"cycles={cycles} | sms={total_sms:,} | hot_leads={total_hot_leads} | revenue=${total_revenue:,}"
-    )
+    log(f"Campaign complete | cycles={cycles} | sms={total_sms:,} | hot_leads={total_hot_leads} | revenue=${total_revenue:,}")
 
 
 def main():
@@ -235,11 +196,9 @@ def main():
     log(f"Campaign window: {CAMPAIGN_START.strftime('%Y-%m-%d %H:%M %Z')} -> {CAMPAIGN_END.strftime('%Y-%m-%d %H:%M %Z')}")
     log(f"Cycle interval: {CYCLE_INTERVAL_SECONDS} seconds")
     log("=" * 60)
-
     if datetime.datetime.now(tz=PDT) >= CAMPAIGN_END:
         log("Campaign end is in the past. Exiting without running.")
         return
-
     while campaign_active():
         cycle_start = time.time()
         try:
@@ -248,14 +207,12 @@ def main():
             send_status_email(cycle_data)
         except Exception as exc:
             log(f"Cycle error: {exc}")
-
         if not campaign_active():
             break
         elapsed = time.time() - cycle_start
         sleep_for = max(0, CYCLE_INTERVAL_SECONDS - elapsed)
         log(f"Sleeping {sleep_for/60:.1f} minutes until next cycle")
         time.sleep(sleep_for)
-
     send_final_summary()
     log("TTI CAMPAIGN ORCHESTRATOR FINISHED")
 
