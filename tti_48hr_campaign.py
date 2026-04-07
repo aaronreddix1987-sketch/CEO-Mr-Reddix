@@ -237,12 +237,10 @@ def run_campaign_cycle():
     INTELLIGENCE_DIR.mkdir(parents=True, exist_ok=True)
     existing = list(INTELLIGENCE_DIR.glob("cycle_*.json"))
     cycle = len(existing) + 1
-    print(f"
-{'='*60}")
+    print(f"\n{'='*60}")
     print(f"  TTI 48-HR CAMPAIGN | CYCLE {cycle} | IQ 200 SUPER HERMES")
     print(f"  {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}")
-    print(f"{'='*60}
-")
+    print(f"{'='*60}\n")
     content_log = [generate_market_content(m, p, cycle) for m in MARKETS for p in PLATFORMS]
     blast = fire_phone_tower_blast(MARKETS, cycle)
     deals = source_owner_finance_deals(MARKETS, cycle)
