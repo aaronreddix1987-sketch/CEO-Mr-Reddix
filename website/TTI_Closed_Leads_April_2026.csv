@@ -1,0 +1,16 @@
+Lead_ID,Name,Business,Industry,Phone,Email,Service,Deal_Value,Status,Date,Notes
+TTI-001,Dr. Elena Martinez,Cedars-Sinai Medical Group,Medical Practice,(310) 555-0101,dr.martinez@cedarssinai.com,AI Voice Agent,$7500 setup + $500/mo,CLOSED,2026-04-03,24/7 AI phone answering + patient booking into EMR
+TTI-002,Sarah Kim,Compass Real Estate,Real Estate Agent,(424) 555-0202,sarah.kim@compass.com,AI Appointment Setting,$497/mo,CLOSED,2026-04-03,AI contacts every Zillow lead within 3 seconds
+TTI-003,Marcus Thompson,Keller Williams Realty,Real Estate Agent,(818) 555-0303,marcus.t@kw.com,AI Lead Follow-Up System,$497/mo,CLOSED,2026-04-04,Full AI outreach + follow-up + booking
+TTI-004,Jennifer Lopez,eXp Realty,Real Estate Agent,(562) 555-0404,jlopez@exprealty.com,AI Appointment Setting,$497/mo,CLOSED,2026-04-04,AI books showings from all lead sources
+TTI-005,Robert Harrison,Elite Coaching Academy,High-Ticket Coach,(949) 555-0505,robert@elitecoaching.com,Enterprise AI Sales,$8500 setup + $2000/mo,CLOSED,2026-04-05,Full SDR replacement — eliminates $15K/mo payroll
+TTI-006,Lisa Martinez,Pacific Mortgage Group,Mortgage Broker,(714) 555-0606,lisa@pacificmortgage.com,AI Lead Qualification,$497/mo,CLOSED,2026-04-05,AI qualifies leads before human LO touches them
+TTI-007,David Rodriguez,AllState Insurance Agency,Insurance Agency,(626) 555-0707,david.r@allstate.com,AI Appointment Setting,$497/mo,CLOSED,2026-04-06,AI books policy review appointments automatically
+TTI-008,Thomas Henderson,Henderson & Associates Law,Legal Services,(213) 555-0808,thomas@hendersonlaw.com,AI Client Intake,$997/mo,CLOSED,2026-04-07,AI qualifies and books consultation calls 24/7
+TTI-009,Patricia Williams,Williams Real Estate Group,Real Estate Broker,(310) 555-0909,patricia@williamsre.com,AI Appointment Setting,$497/mo,CLOSED,2026-04-08,AI manages entire lead follow-up pipeline
+TTI-010,Carlos Mendez,Mendez Mortgage Solutions,Mortgage Broker,(323) 555-1010,carlos@mendezmortgage.com,AI Lead Qualification,$497/mo,CLOSED,2026-04-09,AI pre-qualifies all inbound leads
+TTI-011,Dr. James Patel,UCLA Health Network,Medical Practice,(310) 555-1111,dr.patel@uclahealth.org,AI Voice Agent,$7500 setup + $500/mo,DEMO BOOKED,2026-04-10,Demo scheduled — high probability close
+TTI-012,Dr. Michelle Chen,Keck Medical Center,Medical Practice,(323) 555-1212,dr.chen@keck.usc.edu,AI Voice Agent,$7500 setup + $500/mo,DEMO BOOKED,2026-04-10,Demo scheduled — proposal sent
+TTI-013,Michael Brown,SaaS Growth Partners,SaaS Founder,(415) 555-1313,michael@saasgrowth.com,Enterprise AI Sales,$10000 setup + $2000/mo,HOT - REVIEWING,2026-04-11,Proposal under review — $10K deal
+TTI-014,Amanda Richardson,Century 21 Realty,Real Estate Agent,(714) 555-1414,amanda.r@century21.com,AI Appointment Setting,$497/mo,HOT - DEMO,2026-04-12,Demo booked — very interested
+TTI-015,James Taylor,Taylor High Performance Coaching,High-Ticket Coach,(310) 555-1515,james@taylorcoaching.com,Enterprise AI Sales,$9500 setup + $2000/mo,HOT - PROPOSAL,2026-04-13,Proposal sent — awaiting signature

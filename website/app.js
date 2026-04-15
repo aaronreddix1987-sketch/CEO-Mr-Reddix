@@ -1,6 +1,7 @@
 // ===========================
 // TTI — Total Transformation Inc.
 // App JavaScript — IQ-200 Einstein Mode
+// Frameworks: Martell + Hormozi + Cardone + Brunson + Ovens
 // ===========================
 
 // ===== NAV SCROLL EFFECT =====
@@ -31,10 +32,49 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
       window.scrollTo({ top, behavior: 'smooth' });
     }
+    // Close mobile nav if open
+    const mobileNav = document.getElementById('mobile-nav');
+    if (mobileNav.classList.contains('open')) {
+      mobileNav.classList.remove('open');
+    }
   });
 });
 
-// ===== LEAD FORM SUBMISSION =====
+// ===== COUNTDOWN TIMER (Cardone Urgency) =====
+function startCountdown() {
+  // Set deadline to end of month
+  const now = new Date();
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+  
+  function update() {
+    const now = new Date();
+    const diff = endOfMonth - now;
+    
+    if (diff <= 0) return;
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    const daysEl = document.getElementById('cd-days');
+    const hoursEl = document.getElementById('cd-hours');
+    const minEl = document.getElementById('cd-min');
+    const secEl = document.getElementById('cd-sec');
+    
+    if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+    if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+    if (minEl) minEl.textContent = String(minutes).padStart(2, '0');
+    if (secEl) secEl.textContent = String(seconds).padStart(2, '0');
+  }
+  
+  update();
+  setInterval(update, 1000);
+}
+
+startCountdown();
+
+// ===== LEAD FORM SUBMISSION (Ovens Application Funnel) =====
 function submitLead(e) {
   e.preventDefault();
 
@@ -52,7 +92,7 @@ function submitLead(e) {
   });
 
   if (!name || !business || !phone || !email || !industry) {
-    alert('Please fill in all required fields.');
+    alert('Please fill in all required fields to submit your application.');
     return;
   }
 
@@ -66,17 +106,17 @@ function submitLead(e) {
 
   // Simulate AI processing
   setTimeout(() => {
-    // Log lead to console (in production, this would POST to a backend)
     const lead = {
       id: 'TTI-LEAD-' + Date.now(),
       timestamp: new Date().toISOString(),
       name, business, phone, email, industry, revenue, challenge, services,
-      status: 'NEW',
-      source: 'TTI Website — AI Lead Engine',
-      assigned_to: 'Aaron T. Reddix — 747-301-8586'
+      status: 'NEW — APPLICATION RECEIVED',
+      source: 'TTI Website — Hormozi Grand Slam Funnel',
+      assigned_to: 'Aaron T. Reddix — 747-301-8586',
+      guarantee: '90-Day Performance Guarantee Active'
     };
 
-    console.log('🚀 NEW TTI LEAD CAPTURED:', JSON.stringify(lead, null, 2));
+    console.log('NEW TTI APPLICATION:', JSON.stringify(lead, null, 2));
 
     // Add to live ticker
     addToTicker(name, business, industry, services[0] || 'AI Sales Automation');
@@ -84,11 +124,9 @@ function submitLead(e) {
     // Show success
     document.getElementById('leadForm').style.display = 'none';
     document.getElementById('leadSuccess').style.display = 'block';
-
-    // Scroll to success message
     document.getElementById('leadSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-  }, 2000);
+  }, 2500);
 }
 
 // ===== ADD NEW LEAD TO TICKER =====
@@ -98,7 +136,7 @@ function addToTicker(name, business, industry, service) {
   item.className = 'ticker-item';
 
   const industryMap = {
-    'real-estate': 'Real Estate Agent',
+    'real-estate': 'Real Estate',
     'medical': 'Medical Practice',
     'coaching': 'High-Ticket Coach',
     'mortgage': 'Mortgage Broker',
@@ -107,22 +145,12 @@ function addToTicker(name, business, industry, service) {
     'other': 'Business'
   };
 
-  const serviceMap = {
-    'ai-sales': 'AI Sales Automation',
-    'voice-agent': 'AI Voice Agent',
-    'credit-repair': 'Business Credit',
-    'real-estate': 'Real Estate Partnership'
-  };
-
   const displayIndustry = industryMap[industry] || industry;
-  const displayService = serviceMap[service] || service;
-
-  item.innerHTML = `<span class="ticker-badge">NEW</span> ${name} — ${business} (${displayIndustry}) — ${displayService} — <strong>Proposal Queued</strong>`;
-
+  item.innerHTML = `<span class="ticker-badge">NEW</span> ${name} — ${business} (${displayIndustry}) — Application Received — <strong>Proposal Queued</strong>`;
   ticker.insertBefore(item, ticker.firstChild);
 }
 
-// ===== LIVE TICKER ANIMATION =====
+// ===== LIVE TICKER ROTATION =====
 const tickerMessages = [
   { badge: 'CLOSED', text: 'Dr. Williams — Cedars-Sinai — AI Voice Agent — <strong>$7,500 setup</strong>' },
   { badge: 'DEMO', text: 'Amanda R. — Keller Williams — AI Appointment Setting — <strong>Demo booked</strong>' },
@@ -132,6 +160,10 @@ const tickerMessages = [
   { badge: 'CLOSED', text: 'Carlos B. — Mortgage Pro — AI Qualification — <strong>$497/mo</strong>' },
   { badge: 'HOT', text: 'Rachel K. — Insurance Agency — AI Outreach — <strong>Proposal sent</strong>' },
   { badge: 'CLOSED', text: 'Thomas H. — Compass Realty — AI System — <strong>$497/mo</strong>' },
+  { badge: 'CLOSED', text: 'Dr. Park — Beverly Hills Medical — AI Voice Agent — <strong>$7,500 setup + $500/mo</strong>' },
+  { badge: 'DEMO', text: 'Kevin L. — RE/MAX — AI Appointment Setting — <strong>Demo scheduled</strong>' },
+  { badge: 'CLOSED', text: 'Maria S. — Coaching Empire — Enterprise AI — <strong>$9,500 setup + $2K/mo</strong>' },
+  { badge: 'HOT', text: 'Dr. Johnson — Kaiser Network — AI Patient Booking — <strong>$15K proposal</strong>' },
 ];
 
 let tickerIndex = 0;
@@ -145,8 +177,7 @@ function rotateTicker() {
   item.className = 'ticker-item';
   item.innerHTML = `<span class="ticker-badge">${msg.badge}</span> ${msg.text}`;
 
-  // Remove oldest if more than 12 items
-  if (ticker.children.length >= 12) {
+  if (ticker.children.length >= 15) {
     ticker.removeChild(ticker.lastChild);
   }
 
@@ -154,8 +185,7 @@ function rotateTicker() {
   tickerIndex++;
 }
 
-// Rotate ticker every 8 seconds
-setInterval(rotateTicker, 8000);
+setInterval(rotateTicker, 6000);
 
 // ===== INTERSECTION OBSERVER — ANIMATE ON SCROLL =====
 const observerOptions = {
@@ -171,18 +201,17 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-// Observe cards and sections
-document.querySelectorAll('.service-card, .result-card, .legal-card, .step, .contact-method').forEach(el => {
+document.querySelectorAll('.service-card, .result-card, .legal-card, .step, .contact-method, .pain-card, .cs-card, .offer-item').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(20px)';
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
   observer.observe(el);
 });
 
-// Add visible class styles
 const style = document.createElement('style');
 style.textContent = `
-  .service-card.visible, .result-card.visible, .legal-card.visible, .step.visible, .contact-method.visible {
+  .service-card.visible, .result-card.visible, .legal-card.visible, .step.visible, 
+  .contact-method.visible, .pain-card.visible, .cs-card.visible, .offer-item.visible {
     opacity: 1 !important;
     transform: translateY(0) !important;
   }
@@ -203,7 +232,6 @@ function animateCounter(el, target, prefix = '', suffix = '') {
   }, 16);
 }
 
-// Animate stats when hero is visible
 const heroObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -223,6 +251,58 @@ const heroObserver = new IntersectionObserver((entries) => {
 const heroStats = document.querySelector('.hero-stats');
 if (heroStats) heroObserver.observe(heroStats);
 
+// ===== PAIN STAT COUNTER ANIMATION =====
+const painObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const painStats = document.querySelectorAll('.pain-stat');
+      painStats.forEach(el => {
+        const text = el.textContent;
+        if (text === '73%') { el.textContent = '0%'; animateCounter(el, 73, '', '%'); }
+        if (text === '4 hrs') { el.textContent = '0'; setTimeout(() => el.textContent = '4 hrs', 1000); }
+        if (text === '$15K/mo') { el.textContent = '$0'; animateCounter(el, 15000, '$', ''); setTimeout(() => el.textContent = '$15K/mo', 1200); }
+        if (text === '$47K') { el.textContent = '$0'; animateCounter(el, 47000, '$', ''); setTimeout(() => el.textContent = '$47K', 1200); }
+      });
+      painObserver.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+
+const painSection = document.querySelector('.pain-grid');
+if (painSection) painObserver.observe(painSection);
+
+// ===== FLOATING CTA (Cardone — Always Be Closing) =====
+const floatingCTA = document.createElement('div');
+floatingCTA.innerHTML = `
+  <a href="#leads" style="
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #C9A84C;
+    color: #0D1A4A;
+    padding: 14px 24px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 8px 30px rgba(201,168,76,0.4);
+    z-index: 999;
+    display: none;
+    transition: all 0.3s;
+    font-family: 'Inter', sans-serif;
+  " id="floatingBtn">Apply Now — 5 Spots Left</a>
+`;
+document.body.appendChild(floatingCTA);
+
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('floatingBtn');
+  if (window.scrollY > 600) {
+    btn.style.display = 'block';
+  } else {
+    btn.style.display = 'none';
+  }
+});
+
 // ===== CONSOLE BRANDING =====
 console.log(`
 %c
@@ -234,6 +314,7 @@ console.log(`
 
 TOTAL TRANSFORMATION INC.
 IQ-200 Einstein Mode | No Human System
+Frameworks: Martell + Hormozi + Cardone + Brunson + Ovens
 CEO: Aaron T. Reddix | 747-301-8586
-aaronreddix1987@gmail.com
+90-Day Performance Guarantee Active
 `, 'color: #C9A84C; font-family: monospace; font-size: 12px;');

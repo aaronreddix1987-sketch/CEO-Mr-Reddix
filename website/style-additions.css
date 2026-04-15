@@ -1,0 +1,367 @@
+/* ===========================
+   TTI — ADDITIONAL STYLES
+   Martell + Hormozi + Cardone + Brunson + Ovens
+   =========================== */
+
+/* ===== PROOF BAR ===== */
+.proof-bar {
+  background: var(--off-white);
+  padding: 30px 0;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.proof-bar-img {
+  width: 100%;
+  max-height: 120px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* ===== PAIN SECTION ===== */
+.pain-section {
+  padding: 100px 0;
+  background: var(--white);
+}
+
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.pain-card {
+  background: var(--white);
+  border: 2px solid #FFE0E0;
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.pain-card:hover {
+  border-color: #FF4444;
+  box-shadow: 0 8px 30px rgba(255,68,68,0.1);
+  transform: translateY(-4px);
+}
+
+.pain-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.pain-stat {
+  font-size: 42px;
+  font-weight: 900;
+  color: #CC0000;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.pain-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+
+.pain-card p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.pain-cta {
+  text-align: center;
+  padding: 32px;
+  background: rgba(27,42,107,0.04);
+  border-radius: 16px;
+  border: 1px solid rgba(27,42,107,0.1);
+}
+
+.pain-question {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 20px;
+}
+
+/* ===== CASE STUDY ===== */
+.case-study-section {
+  padding: 100px 0;
+  background: var(--off-white);
+}
+
+.case-study-img-wrap {
+  margin-bottom: 48px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(27,42,107,0.15);
+}
+
+.case-study-img {
+  width: 100%;
+  display: block;
+}
+
+.case-study-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.cs-card {
+  background: var(--white);
+  border: 1px solid var(--light-grey);
+  border-radius: 16px;
+  padding: 32px 24px;
+  border-left: 4px solid var(--gold);
+  transition: all 0.2s;
+}
+
+.cs-card:hover {
+  box-shadow: 0 8px 30px rgba(27,42,107,0.1);
+  transform: translateY(-2px);
+}
+
+.cs-quote {
+  font-size: 16px;
+  font-style: italic;
+  color: var(--dark);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.cs-author {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.cs-result {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  padding: 8px 12px;
+  background: rgba(201,168,76,0.08);
+  border-radius: 6px;
+  display: inline-block;
+}
+
+/* ===== OFFER SECTION ===== */
+.offer-section {
+  padding: 100px 0;
+  background: var(--white);
+}
+
+.offer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.offer-text h2 {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.offer-text > p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 32px;
+  line-height: 1.7;
+}
+
+.offer-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.offer-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.oi-check {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--gold);
+  background: rgba(201,168,76,0.1);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(201,168,76,0.3);
+}
+
+.offer-item div strong {
+  display: block;
+  font-size: 15px;
+  color: var(--dark);
+  margin-bottom: 2px;
+}
+
+.offer-item div span {
+  font-size: 13px;
+  color: var(--grey);
+}
+
+.offer-total {
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 24px 28px;
+  text-align: center;
+}
+
+.total-crossed {
+  font-size: 18px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+}
+
+.total-crossed s {
+  color: #FF6B6B;
+}
+
+.total-price {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--white);
+}
+
+.offer-stack-img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(27,42,107,0.2);
+}
+
+/* ===== GUARANTEE ===== */
+.guarantee-section {
+  padding: 100px 0;
+  background: var(--off-white);
+}
+
+.guarantee-grid {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.guarantee-img {
+  width: 100%;
+  max-width: 400px;
+}
+
+.guarantee-text h2 {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.guarantee-text p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+.guarantee-why {
+  background: rgba(27,42,107,0.05);
+  border-left: 4px solid var(--gold);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 24px !important;
+}
+
+/* ===== URGENCY ===== */
+.urgency-section {
+  padding: 60px 0;
+  background: var(--navy-dark);
+  text-align: center;
+}
+
+.urgency-img {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 12px;
+  margin-bottom: 32px;
+}
+
+.urgency-live {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.countdown-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cd-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cd-num {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+}
+
+.cd-sep {
+  font-size: 36px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.3);
+  margin-top: -16px;
+}
+
+.urgency-text {
+  font-size: 15px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+/* ===== RESPONSIVE ADDITIONS ===== */
+@media (max-width: 1024px) {
+  .pain-grid { grid-template-columns: repeat(2, 1fr); }
+  .case-study-cards { grid-template-columns: 1fr; }
+  .offer-grid { grid-template-columns: 1fr; }
+  .guarantee-grid { grid-template-columns: 1fr; gap: 40px; }
+  .guarantee-img { max-width: 300px; margin: 0 auto; }
+}
+
+@media (max-width: 768px) {
+  .pain-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto 48px; }
+  .cd-num { font-size: 32px; }
+  .cd-sep { font-size: 24px; }
+  .offer-stack-img { display: none; }
+}
