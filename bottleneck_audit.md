@@ -1,3 +1,21 @@
+## 🚨 CRITICAL UPDATE — APR 21 — ALL 5 "FIXED" EMAILS STILL BOUNCING
+
+The V2.0 "fixed" emails were NOT verified. All 5 domains do NOT exist.
+These addresses were never real — they need to be re-researched via Apollo.io or LinkedIn.
+
+| Lead | "Fixed" Email (V2.0) | APR 21 Status | Action Required |
+|------|---------------------|---------------|-----------------|
+| Marcus Davis | marcus@daviseliteperformance.com | ❌ DOMAIN NOT FOUND | Find real email via LinkedIn/Apollo |
+| Dr. William Chang | info@changorthopedics.com | ❌ DOMAIN NOT FOUND | Find real email via LinkedIn/Apollo |
+| Dr. Sarah Kim | info@kimdermatologyclinic.com | ❌ DOMAIN NOT FOUND | Find real email via LinkedIn/Apollo |
+| James Taylor | james@taylorhighperformance.com | ❌ DOMAIN NOT FOUND | Find real email via LinkedIn/Apollo |
+| Michael Brown | michael@saasgrowthpartners.com | ❌ DOMAIN NOT FOUND | Find real email via LinkedIn/Apollo |
+| Penske Buick GMC | PenskeBuickGMCofCerritos@... | ❌ BLOCKED | Find correct contact email |
+
+**Required Fix:** Connect Apollo.io or Hunter.io to Maton gateway to verify all lead emails before next send.
+
+---
+
 # TTI FULL BOTTLENECK & ELIGIBILITY AUDIT V3.0 — APRIL 21, 2026
 ## CEO: Aaron T. Reddix | EIN: 32-0663781 | DUNS: 076903032
 ## Status: V3.0 — ALL APR 21 ACTIONS LOGGED
