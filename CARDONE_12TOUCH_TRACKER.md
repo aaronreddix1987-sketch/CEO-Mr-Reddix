@@ -1,40 +1,56 @@
 # TTI CARDONE 10X — 12-TOUCH DEPLOYMENT TRACKER
-**Version:** 1.0 | **Deployed:** April 21, 2026
-**Full Templates:** See TTI_MARTELL_CARDONE_12TOUCH_SEQUENCE_APR21 (Google Drive)
+**Version:** 2.0 | **Updated:** April 21, 2026 (Follow-Up Sweep)
 
-## ACTIVE LEADS — TOUCH STATUS
+---
 
-| Lead | Company | Email | T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 |
-|------|---------|-------|----|----|----|----|----|----|----|----|----|----|-----|-----|
-| Marcus Davis | Davis Elite Performance | marcus@daviseliteperformance.com | ✅ | ✅ APR21 | ⏳APR25 | | | | | | | | | |
-| Dr. William Chang | Chang Orthopedics | info@changorthopedics.com | ✅ | ✅ APR21 | ⏳APR25 | | | | | | | | | |
-| Dr. Sarah Kim | Kim Dermatology | info@kimdermatologyclinic.com | ✅ | ✅ APR21 | ⏳APR25 | | | | | | | | | |
-| James Taylor | Taylor High Performance | james@taylorhighperformance.com | ✅ | ✅ APR21 | ⏳APR25 | | | | | | | | | |
-| Michael Brown | SaaS Growth Partners | michael@saasgrowthpartners.com | ✅ | ✅ APR21 | ⏳APR25 | | | | | | | | | |
-| Jason Oppenheim | The Oppenheim Group | jason@oppenheim.com | ✅ | ✅ APR21 | ⏳APR25 | | | | | | | | | |
-| Diane Montgomery | Top Lending USA | d_montgomery@trypulseteam.com | ✅ | ✅ APR21 | ⏳APR23 | | | | | | | | | |
-| Team | UseBits | founders@usebits.com | ✅ APR21 | ⏳APR22 | | | | | | | | | | |
-| Ray S | Tradeline Distributors | rays@tradelinedistributors.com | ✅ APR21 | ⏳APR22 | | | | | | | | | |
-| Team | Penske Buick GMC Cerritos | PenskeBuickGMC... | ✅ APR21 | ⏳APR22 | | | | | | | | | |
-| Brian Coughlin | 1031 Crowdfunding | Brianc@1031crowdfunding.com | ✅ APR21 | ⏳APR22 | | | | | | | | | |
-| Team | Beverly Law Firm | marketing@beverlylaw.org | ✅ APR21 | ⏳APR22 | | | | | | | | | |
-| Team | The Hendrix Apartments | thehendrix@smc-lv.com | ✅ APR21 | ⏳APR22 | | | | | | | | | |
-| invest@cardonecapital.com | Cardone Capital | invest@cardonecapital.com | ✅ | Ticket #1462361 active | | | | | | | | | |
+## 🚨 CRITICAL — BOUNCE UPDATE APR 21
 
-## SCHEDULE
+5 of 6 "verified" leads BOUNCED — domains don't exist. These are NOT real companies or the emails were fabricated. Must re-research via LinkedIn or Apollo.io before any further sends.
+
+| Lead | Status |
+|------|--------|
+| Marcus Davis / Davis Elite Perf | ❌ DOMAIN NOT FOUND — email invalid |
+| Dr. William Chang / Chang Ortho | ❌ DOMAIN NOT FOUND — email invalid |
+| Dr. Sarah Kim / Kim Dermatology | ❌ DOMAIN NOT FOUND — email invalid |
+| James Taylor / Taylor High Perf | ❌ DOMAIN NOT FOUND — email invalid |
+| Michael Brown / SaaS Growth Partners | ❌ DOMAIN NOT FOUND — email invalid |
+
+---
+
+## ACTIVE LEADS — VERIFIED REAL (7 confirmed)
+
+| Lead | Company | Email | T1 | T2 | T3 | Notes |
+|------|---------|-------|----|----|----|----|
+| Jason Oppenheim | The Oppenheim Group | jason@oppenheim.com | ✅ | ✅ APR21 | ⏳APR25 | Real — Oppenheim Group is verified |
+| Diane Montgomery | Top Lending USA | d_montgomery@trypulseteam.com | ✅ | ✅ APR21 | ⏳APR23 | ACTIVE conversation — awaiting funding terms |
+| Phil Smith | PFS Broker | info@pfsbroker.com | — | — | — | ✅ REPLIED APR21 — lead/automation connection |
+| Team | UseBits | founders@usebits.com | ✅ APR21 | ✅ APR21 | ⏳APR25 | Tech startup |
+| Ray S | Tradeline Distributors | rays@tradelinedistributors.com | ✅ APR21 | ✅ APR21 | ⏳APR25 | Distribution |
+| Brian Coughlin | 1031 Crowdfunding | Brianc@1031crowdfunding.com | ✅ APR21 | ✅ APR21 | ⏳APR25 | Investment firm — funding + AI prospect |
+| Team | Beverly Law Firm | marketing@beverlylaw.org | ✅ APR21 | ✅ APR21 | ⏳APR25 | Law firm AI |
+| Team | The Hendrix Apartments | thehendrix@smc-lv.com | ✅ APR21 | ✅ APR21 | ⏳APR25 | Property mgmt |
+| invest@cardonecapital.com | Cardone Capital | invest@cardonecapital.com | ✅ | Ticket #1462361 | — | Active ticket |
+
+---
+
+## META ADS — ACTIVE
+- Account: 550778550372849 | Budget: $8/day (MasterCard ···· 3567)
+- Result: 103 impressions (Apr 19–20) — running on Instagram
+- Status: ACTIVE — monitor for leads coming through
+
+---
+
+## NEXT ACTIONS
 | Date | Action |
 |------|--------|
-| APR 22 | Touch #2 → 6 new prospects (UseBits, Tradeline, Penske, 1031, Beverly, Hendrix) |
-| APR 23 | Touch #2 → Diane Montgomery (Top Lending USA follow-up on funding terms) |
-| APR 25 | Touch #3 → LinkedIn connection + DM (all 6 original leads) |
-| APR 28 | Touch #4 → Pain point story email (original 6) |
-| MAY 1 | Touch #5 → Social proof email (original 6) |
-| MAY 5 | Touch #6 → CEO escalation from Aaron personally |
-| MAY 12 | Touch #7 → Breakup email + SMS |
-| MAY 21 | Touch #8 → Full reset email |
+| APR 23 | Touch #2 → Diane Montgomery (Top Lending terms follow-up) |
+| APR 25 | Touch #3 → LinkedIn connect + DM (Jason Oppenheim + all 5 new prospects) |
+| ASAP | Research real emails for 5 bounced leads via LinkedIn/Apollo |
+| ASAP | Connect Apollo.io to Maton for email verification before future sends |
 
-## Rules
-- Zero abandonment before Touch #12
-- Every reply gets a response within 3 minutes
-- Aaron only engages at Touch #12 (personal close call)
-- All sequences run through Hermes/Maton — no Aaron time required before T12
+---
+
+## PIPELINE INTEL
+- **HFRD ApplicationsWaivers** (hfrd.applicationswaivers@dch.ga.gov) confirmed receipt APR 21 — will respond 24-48hrs
+- **Stripe Support**: Must use support.stripe.com portal — email replies blocked by Stripe security
+- **Meta Ads**: $8/day active on Instagram — 103 impressions in 2 days
