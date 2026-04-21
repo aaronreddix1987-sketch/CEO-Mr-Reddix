@@ -1,61 +1,46 @@
-# TTI 48-Hour Master Black Marketing Campaign
+# CEO Mr. Reddix — TTI Command Repository
+## IQ-200 Einstein Mode | Dan Martell 10-80-10 | Grant Cardone 10X
+**Last Updated:** April 21, 2026
 
-**IQ 200 | Super Hermes AI Agent 2026**
+---
 
-## Overview
+## 🔴 LIVE STATUS — APR 21
 
-This repository powers the TTI 48-Hour Master Black Marketing Campaign and Owner Finance Cash Hunt. It generates marketing content across target markets, logs revenue intelligence, and can run a timed campaign loop that commits cycle output and sends status updates.
+### ACTIVE LEADS (13 in Cardone Pipeline)
+See [CARDONE_12TOUCH_TRACKER.md](CARDONE_12TOUCH_TRACKER.md)
 
-## What Was Fixed
+### MASTER PROMPT
+See [MASTER_PROMPT_V2.md](MASTER_PROMPT_V2.md) (V3.0 content)
 
-- Removed hardcoded `/home/ubuntu/...` path assumptions
-- Replaced stale April 2026 hardcoded loop windows with environment-driven scheduling
-- Removed `git push --force` from the main orchestrator
-- Consolidated duplicate loop scripts so they call one maintained runner
-- Kept Gmail status emails optional instead of crashing when the external CLI is unavailable
+### BOTTLENECK AUDIT
+See [bottleneck_audit.md](bottleneck_audit.md) (V3.0)
 
-## Structure
+### LEGAL
+See [legal/TTI_WellsFargo_Legal_War_Log.md](legal/TTI_WellsFargo_Legal_War_Log.md)
 
-```text
-CEO-Mr-Reddix/
-├── tti_48hr_campaign.py      # Single cycle execution
-├── run_campaign_loop.py      # Maintained campaign orchestrator
-├── auto_campaign_loop.py     # Thin wrapper -> run_campaign_loop.main()
-├── auto_48hr_loop.py         # Thin wrapper -> run_campaign_loop.main()
-├── campaign_orchestrator.py  # Thin wrapper -> run_campaign_loop.main()
-├── intelligence/
-│   └── 48hr_campaign/        # Cycle logs, deal data, revenue ledger
-└── logs/
-    └── orchestrator.log      # Loop execution log
-```
+---
 
-## Configuration
+## 🟢 DEPLOYED TODAY (APR 21)
+- MASTER_PROMPT_V3.0 live
+- AGENTS.md V3.0 live (hermes-agent)
+- 12 Cardone emails fired
+- 4 critical email replies sent (Sara/DCH/Stripe/Top Lending)
+- 2 grant pre-apps emailed (Genesis For Good + Hivers & Strivers)
+- GoFundMe copy created in Google Drive
+- Portal pre-fill doc created in Google Drive
+- 9 Asana tasks created/completed
 
-Environment variables:
+## 🔴 AARON MUST DO — 10 MINUTES TOTAL
+1. 🚨 CFPB → consumerfinance.gov/complaint (deadline missed — refile NOW)
+2. 🚨 SAM.gov → sam.gov (EIN: 32-0663781)
+3. ⚠️ GoFundMe → gofundme.com (copy ready in Drive)
+4. ⚠️ Genesis For Good → forms.mygenesisbank.com/f/CatalystGrant
+5. ⚠️ Constant Contact → reconnect at maton.ai/settings
 
-- `TTI_CAMPAIGN_START`: ISO timestamp for campaign start
-- `TTI_CAMPAIGN_END`: ISO timestamp for campaign end
-- `TTI_CAMPAIGN_DURATION_HOURS`: defaults to `48` if no explicit end is set
-- `TTI_CYCLE_INTERVAL_SECONDS`: defaults to `1800`
-- `TTI_RECIPIENT_EMAIL`: status email recipient
+---
 
-If no start or end values are provided, the maintained runner starts immediately and uses a 48-hour window.
+## HERMES AGENT
+Production repo: [hermes-agent](https://github.com/aaronreddix1987-sketch/hermes-agent)
 
-## Usage
-
-```bash
-python3 tti_48hr_campaign.py
-python3 run_campaign_loop.py
-```
-
-## Runtime Configuration
-
-- Paths resolve relative to the repo root
-- `TTI_CAMPAIGN_START` / `TTI_CAMPAIGN_END` support ISO timestamps
-- `TTI_CAMPAIGN_DURATION_HOURS` defaults to `48`
-- `TTI_CYCLE_INTERVAL_SECONDS` defaults to `1800`
-- `TTI_RECIPIENT_EMAIL` controls status email delivery
-
-## Revenue Tracking
-
-All revenue is logged to `intelligence/48hr_campaign/revenue_ledger.jsonl` with cumulative tracking across all cycles.
+## TTI WEBSITE
+Live at: [aaronreddix1987-sketch.github.io](https://aaronreddix1987-sketch.github.io)
