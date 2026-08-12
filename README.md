@@ -15,6 +15,9 @@ See [MASTER_PROMPT_V2.md](MASTER_PROMPT_V2.md) (V3.0 content)
 ### BOTTLENECK AUDIT
 See [bottleneck_audit.md](bottleneck_audit.md) (V3.0)
 
+### OPERATIONS SYSTEM
+See [OPERATIONS_SYSTEM_GUIDE.md](OPERATIONS_SYSTEM_GUIDE.md) for the current outcome, constraint, evidence, and release-gate standard.
+
 ### LEGAL
 See [legal/TTI_WellsFargo_Legal_War_Log.md](legal/TTI_WellsFargo_Legal_War_Log.md)
 
