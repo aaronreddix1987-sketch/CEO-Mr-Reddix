@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Total Transformation Inc. — AI-Powered Wealth Building</title>
+<meta name="description" content="Total Transformation Inc. helps entrepreneurs, veterans, and re-entry individuals build wealth through AI automation, credit mastery, and tax deed real estate investing.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#e94560;--gold:#f5a623;--dark:#0a0a0a;--card:#111827;--card2:#1c2333;--text:#9ca3af;--white:#fff}
+body{background:var(--dark);color:var(--white);font-family:'Helvetica Neue',Arial,sans-serif;line-height:1.6}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;background:rgba(10,10,10,.95);backdrop-filter:blur(10px);z-index:100;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1f2937}
+.logo{font-size:18px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--red)}
+.nav-cta{background:var(--red);color:#fff;padding:10px 22px;border-radius:25px;font-weight:700;font-size:14px;transition:.2s}
+.nav-cta:hover{background:#c73652}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 5% 60px;background:radial-gradient(ellipse at top,#1a1a2e 0%,var(--dark) 60%)}
+.hero-badge{display:inline-block;background:rgba(233,69,96,.15);border:1px solid rgba(233,69,96,.4);color:var(--red);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:8px 20px;border-radius:20px;margin-bottom:24px}
+.hero h1{font-size:clamp(36px,7vw,72px);font-weight:900;line-height:1.1;margin-bottom:20px}
+.hero h1 span{background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:clamp(16px,2.5vw,20px);color:var(--text);max-width:620px;margin:0 auto 36px}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--red),var(--gold));color:#fff;padding:18px 40px;border-radius:50px;font-size:17px;font-weight:800;transition:.2s;display:inline-block}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(233,69,96,.4)}
+.btn-secondary{border:2px solid #374151;color:#d1d5db;padding:16px 38px;border-radius:50px;font-size:17px;font-weight:700;transition:.2s;display:inline-block}
+.btn-secondary:hover{border-color:var(--red);color:#fff}
+
+/* STATS */
+.stats{background:var(--card);padding:50px 5%;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;text-align:center}
+.stat-num{font-size:40px;font-weight:900;color:var(--gold)}
+.stat-label{font-size:13px;color:var(--text);margin-top:4px}
+
+/* SECTION */
+.section{padding:80px 5%;max-width:1100px;margin:0 auto}
+.section-label{font-size:11px;color:var(--red);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;text-align:center}
+.section-title{font-size:clamp(28px,4vw,42px);font-weight:800;text-align:center;margin-bottom:50px}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.pillar{background:var(--card2);border-radius:16px;padding:28px;border:1px solid #1f2937;transition:.2s}
+.pillar:hover{border-color:var(--red);transform:translateY(-4px)}
+.pillar-icon{font-size:36px;margin-bottom:14px}
+.pillar-name{font-size:16px;font-weight:700;color:var(--red);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.pillar-desc{font-size:13px;color:var(--text);line-height:1.7}
+.pillar-price{margin-top:14px;font-size:14px;font-weight:700;color:var(--gold)}
+
+/* CASE STUDIES */
+.cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.case{background:var(--card2);border-radius:16px;padding:24px;border-left:4px solid var(--red)}
+.case-program{font-size:11px;color:var(--red);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.case-name{font-size:18px;font-weight:800;margin-bottom:14px}
+.case-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.case-col-label{font-size:10px;color:#6b7280;text-transform:uppercase;margin-bottom:4px}
+.case-col-before{font-size:12px;color:var(--text)}
+.case-col-after{font-size:12px;color:#d1fae5}
+.case-quote{background:var(--card);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--gold);font-style:italic;margin-bottom:12px}
+.case-result{font-size:12px;color:#10b981;font-weight:700}
+
+/* PACKAGES */
+.packages{display:grid;gap:12px;max-width:700px;margin:0 auto}
+.package{background:var(--card2);border-radius:12px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;border:1px solid #1f2937;transition:.2s}
+.package:hover{border-color:var(--red)}
+.package.featured{background:linear-gradient(135deg,#1e293b,#0f3460);border-color:var(--red)}
+.pkg-name{font-size:15px;font-weight:700}
+.pkg-desc{font-size:12px;color:var(--text);margin-top:3px}
+.pkg-price{font-size:22px;font-weight:900;color:var(--red)}
+.package.featured .pkg-price{color:var(--gold)}
+.featured-badge{font-size:10px;color:var(--red);font-weight:700;letter-spacing:1px;margin-bottom:4px}
+
+/* CTA SECTION */
+.cta-section{background:linear-gradient(135deg,var(--red),var(--gold));padding:80px 5%;text-align:center;border-radius:24px;margin:0 5% 60px}
+.cta-section h2{font-size:clamp(28px,4vw,42px);font-weight:900;margin-bottom:16px}
+.cta-section p{font-size:17px;opacity:.9;max-width:500px;margin:0 auto 30px}
+.btn-white{background:#fff;color:var(--red);padding:18px 45px;border-radius:50px;font-size:17px;font-weight:900;display:inline-block;transition:.2s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.2)}
+.cta-contact{margin-top:18px;font-size:14px;opacity:.9}
+
+/* FOOTER */
+footer{background:#050505;padding:30px 5%;text-align:center;border-top:1px solid #1f2937}
+footer p{font-size:12px;color:#4b5563}
+footer a{color:#4b5563}
+
+/* PHONE FLOAT */
+.phone-float{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,var(--red),var(--gold));color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 20px rgba(233,69,96,.5);z-index:200;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(233,69,96,.5)}50%{box-shadow:0 4px 40px rgba(233,69,96,.8)}}
+
+@media(max-width:600px){
+  .hero-btns{flex-direction:column;align-items:center}
+  .case-cols{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">TOTAL <span>TRANSFORMATION</span> INC.</div>
+  <a href="tel:7473018586" class="nav-cta">📞 Call Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge">Los Angeles, CA &nbsp;|&nbsp; Est. 2020 &nbsp;|&nbsp; EIN 32-0663781</div>
+    <h1>Stop Trading Time<br>for Money.<br><span>Start Building Wealth.</span></h1>
+    <p>AI Business Automation · Credit Mastery · Tax Deed Real Estate · Veteran & Re-Entry Programs</p>
+    <div class="hero-btns">
+      <a href="#packages" class="btn-primary">🔥 Get Started Now</a>
+      <a href="tel:7473018586" class="btn-secondary">📞 747-301-8586</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div><div class="stat-num">500+</div><div class="stat-label">Clients Served</div></div>
+  <div><div class="stat-num">$2.1M</div><div class="stat-label">Client Wealth Created</div></div>
+  <div><div class="stat-num">85%</div><div class="stat-label">Employment Rate</div></div>
+  <div><div class="stat-num">252pts</div><div class="stat-label">Avg Credit Increase</div></div>
+  <div><div class="stat-num">200+</div><div class="stat-label">Veterans Helped</div></div>
+</div>
+
+<!-- 4 PILLARS -->
+<div style="background:#0d1117;padding:80px 0">
+<div class="section">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">The 4 Pillars of TTI Wealth</h2>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-icon">🤖</div>
+      <div class="pillar-name">AI Business Automation</div>
+      <div class="pillar-desc">Done-for-you AI systems that save 10+ hours per week. Automate emails, follow-ups, lead generation, and customer service.</div>
+      <div class="pillar-price">From $97</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">💳</div>
+      <div class="pillar-name">Credit Mastery</div>
+      <div class="pillar-desc">800 Score Blueprint + Business Credit strategy. Dispute letters, tradeline roadmap, and $50K–$250K in business funding.</div>
+      <div class="pillar-price">From $67</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🏠</div>
+      <div class="pillar-name">Tax Deed Real Estate</div>
+      <div class="pillar-desc">Buy properties for pennies on the dollar at government tax deed auctions. Full system: research, bid, exit.</div>
+      <div class="pillar-price">From $97</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🎖️</div>
+      <div class="pillar-name">Veteran & Re-Entry</div>
+      <div class="pillar-desc">Grants, housing programs, RADT certification prep, and business launch support for veterans and returning citizens.</div>
+      <div class="pillar-price">Free – $97</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- CASE STUDIES -->
+<div class="section">
+  <div class="section-label">Proof</div>
+  <h2 class="section-title">Real People. Real Results.</h2>
+  <div class="cases">
+    <div class="case">
+      <div class="case-program">Credit Mastery + Business Credit</div>
+      <div class="case-name">Marcus T. — South LA</div>
+      <div class="case-cols">
+        <div><div class="case-col-label">Before</div><div class="case-col-before">512 credit score. $0 business funding. Working 2 jobs.</div></div>
+        <div><div class="case-col-label">After</div><div class="case-col-after">764 score. $85K business credit. Quit second job.</div></div>
+      </div>
+      <div class="case-quote">"TTI gave me the blueprint. I followed the steps and the banks started saying yes."</div>
+      <div class="case-result">✅ $85K business credit | +252 points | 8 months</div>
+    </div>
+    <div class="case">
+      <div class="case-program">Tax Deed Real Estate</div>
+      <div class="case-name">Denise R. — Compton</div>
+      <div class="case-cols">
+        <div><div class="case-col-label">Before</div><div class="case-col-before">Renting. No RE knowledge. $3,200 saved.</div></div>
+        <div><div class="case-col-label">After</div><div class="case-col-after">Bought tax deed for $8,400. Resold for $41,000.</div></div>
+      </div>
+      <div class="case-quote">"I bought a house for less than a used car. TTI showed me exactly how."</div>
+      <div class="case-result">✅ $32,600 profit | First deal | 4 months</div>
+    </div>
+    <div class="case">
+      <div class="case-program">AI Automation + Veteran Program</div>
+      <div class="case-name">James W. — Veteran, San Bernardino</div>
+      <div class="case-cols">
+        <div><div class="case-col-label">Before</div><div class="case-col-before">Returning veteran. No stable income.</div></div>
+        <div><div class="case-col-label">After</div><div class="case-col-after">AI bookkeeping service. 6 clients. $4,200/mo.</div></div>
+      </div>
+      <div class="case-quote">"My AI system runs while I sleep. It finds clients and follows up automatically."</div>
+      <div class="case-result">✅ $4,200/month recurring | 60 days to launch</div>
+    </div>
+    <div class="case">
+      <div class="case-program">Re-Entry Business Launch</div>
+      <div class="case-name">Robert M. — Watts</div>
+      <div class="case-cols">
+        <div><div class="case-col-label">Before</div><div class="case-col-before">Newly released. No credit. No business.</div></div>
+        <div><div class="case-col-label">After</div><div class="case-col-after">$12,500 grants. Mobile detailing biz. 2 employees.</div></div>
+      </div>
+      <div class="case-quote">"TTI helped me find money I didn't know existed — and gave me the business to put it into."</div>
+      <div class="case-result">✅ $12,500 grants | Business in 45 days | 2 hired</div>
+    </div>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<div id="packages" style="background:#0d1117;padding:80px 0">
+<div class="section">
+  <div class="section-label">Choose Your Path</div>
+  <h2 class="section-title">TTI Programs & Pricing</h2>
+  <div class="packages">
+    <div class="package">
+      <div><div class="pkg-name">▶ AI Automation Starter</div><div class="pkg-desc">Core AI system + credit guide</div></div>
+      <div class="pkg-price">$97</div>
+    </div>
+    <div class="package">
+      <div><div class="pkg-name">▶ Credit Mastery Blueprint</div><div class="pkg-desc">800 score system + dispute letters</div></div>
+      <div class="pkg-price">$67</div>
+    </div>
+    <div class="package">
+      <div><div class="pkg-name">▶ TTI Standard Package</div><div class="pkg-desc">Full course suite + RE masterclass</div></div>
+      <div class="pkg-price">$500</div>
+    </div>
+    <div class="package featured">
+      <div><div class="featured-badge">⭐ MOST POPULAR</div><div class="pkg-name">TTI Premium</div><div class="pkg-desc">1-on-1 coaching + done-for-you AI + credit repair</div></div>
+      <div class="pkg-price">$2,500</div>
+    </div>
+    <div class="package">
+      <div><div class="pkg-name">👑 Executive Suite</div><div class="pkg-desc">Full business build-out + AI phone agent + support</div></div>
+      <div class="pkg-price">$5,000</div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:24px;font-size:14px;color:var(--text)">Pay via Chime: <strong style="color:#fff">747-301-8586</strong> or $ceomrreddix &nbsp;|&nbsp; Reply to confirm enrollment</p>
+</div>
+</div>
+
+<!-- CTA -->
+<div style="padding:0 0 0">
+<div class="cta-section">
+  <h2>Ready to Build Real Wealth?</h2>
+  <p>Join 500+ entrepreneurs, veterans, and investors using TTI to automate income and build credit-powered businesses.</p>
+  <a href="tel:7473018586" class="btn-white">🔥 Call / Text Now: 747-301-8586</a>
+  <div class="cta-contact">Or email: <strong>aaronreddix1987@gmail.com</strong> &nbsp;|&nbsp; EIN: 32-0663781</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Total Transformation Inc. (TTI) &nbsp;|&nbsp; Los Angeles, CA &nbsp;|&nbsp; EIN: 32-0663781 &nbsp;|&nbsp; 747-301-8586<br>
+  <a href="mailto:aaronreddix1987@gmail.com?subject=Unsubscribe">Unsubscribe</a></p>
+</footer>
+
+<!-- FLOATING CALL BUTTON -->
+<a href="tel:7473018586" class="phone-float" title="Call TTI Now">📞</a>
+
+<script>
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
