@@ -1595,60 +1595,57 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
 
 <!-- ORDER MODAL / PAYMENT SECTION -->
-<div id="order-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
-  <div style="background:#1a1a1a;border:2px solid #C9A84C;padding:40px;max-width:480px;width:90%;border-radius:4px;text-align:center;">
-    <h2 style="color:#C9A84C;font-size:24px;margin-bottom:8px;">ORDER YOUR EBOOK</h2>
-    <p id="modal-title" style="color:#fff;font-size:18px;font-weight:700;margin-bottom:4px;"></p>
-    <p id="modal-price" style="color:#C9A84C;font-size:32px;font-weight:900;margin-bottom:24px;"></p>
-    <p style="color:#999;font-size:14px;margin-bottom:20px;">Choose your payment method:</p>
-    <a id="stripe-btn" href="https://ttifunnel-6luockni.manus.space/" target="_blank" style="display:block;background:#635bff;color:#fff;padding:16px 20px;font-weight:900;font-size:17px;letter-spacing:1px;text-decoration:none;margin-bottom:16px;border-radius:4px;border:2px solid #7c74ff;">💳 BUY NOW — SECURE STRIPE CHECKOUT</a>
-    <div style="color:#666;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;border-top:1px solid #333;padding-top:14px;">OR PAY DIRECTLY:</div>
-    <a id="chime-btn" href="https://app.chime.com/link/qr?u=ceomrreddix" target="_blank" style="display:block;background:#32D74B;color:#000;padding:12px 20px;font-weight:900;font-size:15px;letter-spacing:1px;text-decoration:none;margin-bottom:10px;border-radius:4px;">💚 CHIME — $ceomrreddix</a>
-    <a id="cashapp-btn" href="https://cash.app/$aarontreddix" target="_blank" style="display:block;background:#00D54B;color:#000;padding:12px 20px;font-weight:900;font-size:15px;letter-spacing:1px;text-decoration:none;margin-bottom:10px;border-radius:4px;">💵 CASH APP — $aarontreddix</a>
-    <a id="zelle-btn" href="#" target="_blank" style="display:block;background:#6d31ed;color:#fff;padding:12px 20px;font-weight:900;font-size:15px;letter-spacing:1px;text-decoration:none;margin-bottom:10px;border-radius:4px;">🟣 ZELLE — (747) 301-8586</a>
-    <a id="email-btn" href="#" style="display:block;background:#C9A84C;color:#000;padding:12px 20px;font-weight:900;font-size:15px;letter-spacing:1px;text-decoration:none;border-radius:4px;">📧 EMAIL ORDER — aaronreddix1987@gmail.com</a>
-    <p style="color:#666;font-size:12px;margin-top:8px;">After payment, email receipt to <strong style="color:#C9A84C;">aaronreddix1987@gmail.com</strong> for instant PDF delivery.</p>
-    <button onclick="document.getElementById('order-modal').style.display='none'" style="margin-top:16px;background:transparent;border:1px solid #444;color:#999;padding:8px 20px;cursor:pointer;font-size:13px;">✕ Close</button>
+<div id="order-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#1a1a1a;border:2px solid #C9A84C;padding:36px 30px;max-width:460px;width:92%;border-radius:8px;text-align:center;position:relative;">
+    <button onclick="document.getElementById('order-modal').style.display='none'" style="position:absolute;top:12px;right:16px;background:transparent;border:none;color:#888;font-size:22px;cursor:pointer;line-height:1;">✕</button>
+    <h2 style="color:#C9A84C;font-size:22px;margin:0 0 10px;letter-spacing:1px;">ORDER YOUR EBOOK</h2>
+    <p id="modal-title" style="color:#fff;font-size:16px;font-weight:700;margin:0 0 6px;"></p>
+    <p id="modal-price" style="color:#C9A84C;font-size:36px;font-weight:900;margin:0 0 24px;"></p>
+    <p style="color:#aaa;font-size:13px;margin:0 0 18px;">Choose how to pay — then email your receipt for instant PDF delivery:</p>
+
+    <a id="paypal-btn" href="#" target="_blank" style="display:block;background:#003087;color:#fff;padding:15px 20px;font-weight:900;font-size:16px;letter-spacing:1px;text-decoration:none;margin-bottom:12px;border-radius:6px;">🔵 PAY WITH PAYPAL</a>
+
+    <a id="venmo-btn" href="#" target="_blank" style="display:block;background:#3d95ce;color:#fff;padding:15px 20px;font-weight:900;font-size:16px;letter-spacing:1px;text-decoration:none;margin-bottom:12px;border-radius:6px;">✅ PAY WITH VENMO — @ceomrreddix</a>
+
+    <a id="email-btn" href="#" style="display:block;background:#C9A84C;color:#000;padding:15px 20px;font-weight:900;font-size:16px;letter-spacing:1px;text-decoration:none;border-radius:6px;">📧 ORDER BY EMAIL</a>
+
+    <p style="color:#666;font-size:12px;margin-top:14px;">After payment, email receipt to <strong style="color:#C9A84C;">aaronreddix1987@gmail.com</strong> and your PDF will be sent immediately.</p>
   </div>
 </div>
 
 <script>
-function orderBook(title, price, num) {
-  var modal = document.getElementById('order-modal');
+function openModal(title, price) {
+  var priceClean = price.toString().replace('$','').trim();
+  var priceDisplay = '$' + priceClean;
+  var note = encodeURIComponent('Ebook: ' + title + ' ' + priceDisplay);
   document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-price').textContent = price.startsWith('$') ? price : '$' + price;
-  var priceNum = price.replace('$','').replace(',','').trim();
-  var msg = encodeURIComponent('I want to buy: ' + title + ' (' + price + ') - Ebook #' + num);
-  document.getElementById('chime-btn').href = 'https://app.chime.com/link/qr?u=ceomrreddix';
-  document.getElementById('cashapp-btn').href = 'https://cash.app/$aarontreddix/' + priceNum;
-  document.getElementById('zelle-btn').href = 'sms:+17473018586?body=Zelle payment for: ' + decodeURIComponent(msg);
-  document.getElementById('email-btn').href = 'mailto:aaronreddix1987@gmail.com?subject=Order: ' + title + '&body=I want to purchase: ' + title + ' (' + price + ')%0A%0AMy Name:%0APhone:%0APayment method used:%0APayment confirmation #:';
+  document.getElementById('modal-price').textContent = priceDisplay;
+  document.getElementById('paypal-btn').href = 'https://www.paypal.com/paypalme/ceomrreddix/' + priceClean;
+  document.getElementById('venmo-btn').href = 'https://venmo.com/ceomrreddix?txn=pay&amount=' + priceClean + '&note=' + note;
+  document.getElementById('email-btn').href = 'mailto:aaronreddix1987@gmail.com?subject=Ebook Order: ' + encodeURIComponent(title) + '&body=' + encodeURIComponent('I would like to purchase:\n\nEbook: ' + title + '\nPrice: ' + priceDisplay + '\n\nMy Name:\nPhone:\nPayment method & confirmation #:');
+  var modal = document.getElementById('order-modal');
   modal.style.display = 'flex';
+  modal.onclick = function(e){ if(e.target === modal) modal.style.display='none'; };
 }
-</script>
 
-<script>
-// Wire all ebook cards to payment modal — no target="_blank", no href conflicts
+// Wire every Get It Now button
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.ebook-card').forEach(function(card) {
     var btn = card.querySelector('.ebook-btn');
     if (!btn) return;
-    var titleEl = card.querySelector('.ebook-title') || card.querySelector('h3');
+    var titleEl = card.querySelector('.ebook-title, h3');
     var priceEl = card.querySelector('.ebook-price');
-    var numEl = card.querySelector('.ebook-num');
     if (!titleEl || !priceEl) return;
-    var title = titleEl.innerText.trim();
-    var rawPrice = priceEl.innerText.trim();
-    // CSS ::before adds "$" but innerText may or may not include it
-    var price = rawPrice.startsWith('$') ? rawPrice : '$' + rawPrice;
-    var num = numEl ? numEl.innerText.replace('EBOOK','').trim() : '';
-    btn.href = '#';
+    var title = titleEl.innerText.replace(/\n/g,' ').trim();
+    var price = priceEl.innerText.trim();
+    btn.setAttribute('href','#');
     btn.removeAttribute('target');
-    btn.addEventListener('click', function(e) {
+    btn.onclick = function(e){
       e.preventDefault();
       e.stopPropagation();
-      orderBook(title, price, num);
-    });
+      openModal(title, price);
+      return false;
+    };
   });
 });
 </script>
