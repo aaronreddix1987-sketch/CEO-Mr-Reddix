@@ -1,928 +1,714 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Total Transformation Inc. | Aaron Thomas Reddix - CEO</title>
-    <meta name="description" content="$5M Grant-Funded Recovery, Housing & AI Workforce Initiative. 500+ Lives Transformed Annually. Premium AI Automation Services.">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --gold: #D4AF37;
-            --gold-light: #F4E5B8;
-            --gold-dark: #B8941F;
-            --dark: #0A0A0A;
-            --dark-card: #141414;
-            --dark-lighter: #1E1E1E;
-            --white: #FFFFFF;
-            --gray: #CCCCCC;
-            --gray-dark: #666666;
-        }
-
-        body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background: var(--dark);
-            color: var(--white);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Luxury Header */
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--gold);
-            z-index: 1000;
-            padding: 20px 0;
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--gold);
-            text-transform: uppercase;
-        }
-
-        .logo-subtitle {
-            font-size: 12px;
-            color: var(--gray);
-            font-weight: 400;
-            letter-spacing: 4px;
-            margin-top: 5px;
-        }
-
-        .header-cta {
-            display: flex;
-            gap: 20px;
-        }
-
-        .btn {
-            padding: 15px 35px;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-decoration: none;
-            border: 2px solid var(--gold);
-            background: transparent;
-            color: var(--gold);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .btn:hover {
-            background: var(--gold);
-            color: var(--dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-primary {
-            background: var(--gold);
-            color: var(--dark);
-        }
-
-        .btn-primary:hover {
-            background: var(--gold-light);
-        }
-
-        /* Hero Section - Grant Cardone Style */
-        .hero {
-            min-height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><rect fill="%230A0A0A"/></svg>');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 120px 40px 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 12px 30px;
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            font-size: 14px;
-            letter-spacing: 3px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .hero h1 {
-            font-size: 72px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-            line-height: 1.1;
-            text-transform: uppercase;
-        }
-
-        .hero .gold-text {
-            color: var(--gold);
-        }
-
-        .hero h2 {
-            font-size: 32px;
-            font-weight: 400;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            color: var(--gray);
-        }
-
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            margin: 50px 0;
-            flex-wrap: wrap;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--gold);
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--gray);
-        }
-
-        .hero-cta {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-
-        /* Services Section - Luxury Office Style */
-        .services {
-            padding: 120px 40px;
-            background: var(--dark-card);
-            position: relative;
-        }
-
-        .services::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-title h2 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .section-title p {
-            font-size: 18px;
-            color: var(--gray);
-            letter-spacing: 1px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .services-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
-
-        .service-card {
-            background: var(--dark-lighter);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 50px 40px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gold);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--gold);
-            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
-        }
-
-        .service-icon {
-            font-size: 48px;
-            color: var(--gold);
-            margin-bottom: 25px;
-        }
-
-        .service-card h3 {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .service-card p {
-            font-size: 16px;
-            color: var(--gray);
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .service-card ul {
-            list-style: none;
-            margin-top: 20px;
-        }
-
-        .service-card li {
-            padding: 8px 0;
-            color: var(--gray);
-            font-size: 15px;
-        }
-
-        .service-card li::before {
-            content: '→';
-            color: var(--gold);
-            margin-right: 10px;
-            font-weight: bold;
-        }
-
-        /* Impact Section */
-        .impact {
-            padding: 120px 40px;
-            background: var(--dark);
-        }
-
-        .impact-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .impact-text h2 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-        }
-
-        .impact-text p {
-            font-size: 18px;
-            color: var(--gray);
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .impact-highlights {
-            margin-top: 40px;
-        }
-
-        .highlight-item {
-            padding: 25px 0;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .highlight-item h4 {
-            color: var(--gold);
-            font-size: 20px;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .highlight-item p {
-            color: var(--gray);
-            font-size: 15px;
-        }
-
-        .impact-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-        }
-
-        .impact-stat-box {
-            background: var(--dark-card);
-            padding: 40px 30px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            text-align: center;
-        }
-
-        .impact-stat-box h3 {
-            font-size: 42px;
-            color: var(--gold);
-            margin-bottom: 10px;
-        }
-
-        .impact-stat-box p {
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Payment Section */
-        .payment {
-            padding: 120px 40px;
-            background: linear-gradient(135deg, var(--dark-card) 0%, var(--dark-lighter) 100%);
-            text-align: center;
-            border-top: 1px solid var(--gold);
-            border-bottom: 1px solid var(--gold);
-        }
-
-        .payment-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .payment h2 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .payment p {
-            font-size: 20px;
-            color: var(--gray);
-            margin-bottom: 50px;
-        }
-
-        .payment-methods {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 50px 0;
-            flex-wrap: wrap;
-        }
-
-        .payment-method {
-            background: var(--dark);
-            padding: 40px;
-            border: 2px solid var(--gold);
-            min-width: 250px;
-            transition: all 0.3s ease;
-        }
-
-        .payment-method:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
-        }
-
-        .payment-method h3 {
-            color: var(--gold);
-            font-size: 24px;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        .payment-method .chime-link {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--gold);
-            text-decoration: none;
-            display: block;
-            margin: 20px 0;
-            letter-spacing: 1px;
-        }
-
-        .payment-method .chime-link:hover {
-            color: var(--gold-light);
-        }
-
-        .payment-info {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .payment-info p {
-            font-size: 16px;
-            color: var(--gray);
-            margin: 10px 0;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 120px 40px;
-            background: var(--dark);
-        }
-
-        .contact-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .contact h2 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            margin-bottom: 50px;
-            text-transform: uppercase;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .contact-item {
-            padding: 40px;
-            background: var(--dark-card);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .contact-item h3 {
-            color: var(--gold);
-            font-size: 20px;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .contact-item a {
-            color: var(--white);
-            text-decoration: none;
-            font-size: 18px;
-            transition: color 0.3s ease;
-        }
-
-        .contact-item a:hover {
-            color: var(--gold);
-        }
-
-        .contact-item p {
-            color: var(--gray);
-            font-size: 16px;
-            line-height: 1.8;
-        }
-
-        /* Footer */
-        .footer {
-            padding: 60px 40px 40px;
-            background: var(--dark-card);
-            border-top: 1px solid var(--gold);
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-logo {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            color: var(--gold);
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .footer-info {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-
-        .footer-info-item {
-            color: var(--gray);
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
-
-        .footer-copyright {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            color: var(--gray-dark);
-            font-size: 14px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 42px;
-            }
-
-            .hero h2 {
-                font-size: 24px;
-            }
-
-            .hero-stats {
-                gap: 30px;
-            }
-
-            .stat-number {
-                font-size: 36px;
-            }
-
-            .section-title h2 {
-                font-size: 36px;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .impact-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .header-cta {
-                display: none;
-            }
-
-            .btn {
-                padding: 12px 25px;
-                font-size: 12px;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        /* Luxury Touch - Subtle Gold Shimmer */
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-
-        .gold-shimmer {
-            background: linear-gradient(90deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-dark) 100%);
-            background-size: 1000px 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 3s infinite linear;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Total Transformation Inc. | Aaron Reddix - CEO | 64+ Digital Products</title>
+<meta name="description" content="60+ Ebooks covering business, credit, real estate, AI automation, towing services. CEO Aaron Thomas Reddix. Digital products and business solutions.">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #0066CC;
+  --primary-dark: #004C99;
+  --secondary: #00CC99;
+  --dark: #1A1A1A;
+  --dark2: #2A2A2A;
+  --light: #F5F5F5;
+  --white: #FFFFFF;
+  --text: #333333;
+  --gray: #666666;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  background: var(--white);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* NAVIGATION */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: var(--white);
+  border-bottom: 3px solid var(--primary);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+  padding: 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: 1px;
+}
+
+.logo-sub {
+  font-size: 11px;
+  color: var(--gray);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--white);
+  padding: 12px 30px;
+  font-weight: 700;
+  border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,102,204,0.3);
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  padding: 100px 40px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+}
+
+.hero-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 300px;
+  color: var(--white);
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 30px;
+  opacity: 0.95;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-white {
+  background: var(--white);
+  color: var(--primary);
+  padding: 16px 40px;
+  font-weight: 700;
+  border-radius: 5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.btn-white:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  padding: 16px 40px;
+  font-weight: 700;
+  border: 2px solid var(--white);
+  border-radius: 5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.btn-outline:hover {
+  background: var(--white);
+  color: var(--primary);
+}
+
+/* STATS */
+.stats {
+  background: var(--dark);
+  color: var(--white);
+  padding: 60px 40px;
+}
+
+.stats-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 56px;
+  font-weight: 900;
+  color: var(--secondary);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 10px;
+}
+
+/* SECTION */
+.section {
+  padding: 80px 40px;
+}
+
+.section-alt {
+  background: var(--light);
+}
+
+.section-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px;
+}
+
+.section-label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 900;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.section-desc {
+  font-size: 18px;
+  color: var(--gray);
+}
+
+/* EBOOKS */
+.ebook-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.ebook-card {
+  background: var(--white);
+  border: 2px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 30px;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.ebook-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.ebook-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.ebook-category {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.ebook-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.ebook-desc {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.ebook-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ebook-price {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.ebook-btn {
+  background: var(--secondary);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.ebook-btn:hover {
+  background: #00B386;
+  transform: scale(1.05);
+}
+
+/* PAYMENT */
+.payment {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: var(--white);
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.payment h2 {
+  font-size: 48px;
+  font-weight: 900;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.payment-box {
+  max-width: 600px;
+  margin: 40px auto;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 10px;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+.payment-link {
+  display: inline-block;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--white);
+  text-decoration: none;
+  padding: 20px 40px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  margin: 20px 0;
+  transition: all 0.3s;
+}
+
+.payment-link:hover {
+  background: rgba(0,0,0,0.5);
+  transform: scale(1.05);
+}
+
+.payment-methods {
+  margin-top: 30px;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* CONTACT */
+.contact {
+  padding: 80px 40px;
+  background: var(--dark);
+  color: var(--white);
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 48px;
+  font-weight: 900;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+.contact-info {
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+.contact-info a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+/* FOOTER */
+footer {
+  background: #0A0A0A;
+  color: var(--gray);
+  padding: 40px;
+  text-align: center;
+}
+
+footer p {
+  font-size: 14px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav {
+    padding: 12px 20px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    padding: 80px 20px 40px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .section {
+    padding: 60px 20px;
+  }
+
+  .ebook-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div>
-                <div class="logo">TOTAL TRANSFORMATION</div>
-                <div class="logo-subtitle">LUXURY OPERATIONS</div>
-            </div>
-            <div class="header-cta">
-                <a href="tel:7473018586" class="btn">CALL NOW</a>
-                <a href="#payment" class="btn btn-primary">INVEST</a>
-            </div>
-        </div>
-    </header>
+<!-- NAVIGATION -->
+<nav>
+  <div>
+    <div class="logo">TOTAL TRANSFORMATION</div>
+    <div class="logo-sub">Command Center</div>
+  </div>
+  <div class="nav-links">
+    <a href="#ebooks">Ebooks</a>
+    <a href="#payment">Pay Now</a>
+    <a href="tel:7473018586" class="btn-primary">Call (747) 301-8586</a>
+  </div>
+</nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content fade-in-up">
-            <div class="hero-badge">$5 MILLION GRANT INITIATIVE</div>
-            <h1>TOTAL <span class="gold-text gold-shimmer">TRANSFORMATION</span></h1>
-            <h2>Recovery • Housing • AI Workforce • Veterans</h2>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">Einstein Mode IQ 200 Active</div>
+      <h1>64+ Digital Products</h1>
+      <p>Credit mastery, real estate investing, AI automation, business building, and certification prep. Instant download.</p>
+      <div class="hero-actions">
+        <a href="#ebooks" class="btn-white">Browse Ebooks</a>
+        <a href="tel:7473018586" class="btn-outline">Contact CEO</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">Lives Transformed Annually</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">$5M</span>
-                    <span class="stat-label">Grant Initiative</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">200+</span>
-                    <span class="stat-label">Veterans Served</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">24/7</span>
-                    <span class="stat-label">AI Automation</span>
-                </div>
-            </div>
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+    <div>
+      <div class="stat-number">64+</div>
+      <div class="stat-label">Digital Products</div>
+    </div>
+    <div>
+      <div class="stat-number">24/7</div>
+      <div class="stat-label">Support Available</div>
+    </div>
+    <div>
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Instant Download</div>
+    </div>
+    <div>
+      <div class="stat-number">$9-$47</div>
+      <div class="stat-label">Price Range</div>
+    </div>
+  </div>
+</section>
 
-            <div class="hero-cta">
-                <a href="#services" class="btn btn-primary">EXPLORE SERVICES</a>
-                <a href="tel:7473018586" class="btn">SCHEDULE CONSULTATION</a>
-            </div>
-        </div>
-    </section>
+<!-- EBOOKS -->
+<section class="section" id="ebooks">
+  <div class="section-header">
+    <div class="section-label">Digital Library</div>
+    <h2 class="section-title">Premium Ebooks</h2>
+    <p class="section-desc">60+ ebooks covering credit, real estate, AI tools, certification prep, business building, and more.</p>
+  </div>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="section-title">
-            <h2>PREMIUM <span class="gold-text">SERVICES</span></h2>
-            <p>Integrated solutions for recovery, housing, workforce development, and business automation</p>
-        </div>
+  <div class="ebook-grid">
 
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">🏢</div>
-                <h3>Transformation Center</h3>
-                <p>Comprehensive recovery support, sober living, and veteran housing integrated with vocational preparation and wraparound services.</p>
-                <ul>
-                    <li>24/7 supervised sober living</li>
-                    <li>Licensed clinical partnerships</li>
-                    <li>Trauma-informed care</li>
-                    <li>200+ veterans served annually</li>
-                    <li>70% completion rate</li>
-                </ul>
-            </div>
+    <div class="ebook-card">
+      <div class="ebook-icon">💳</div>
+      <div class="ebook-category">Finance</div>
+      <h3 class="ebook-title">Credit Repair Mastery</h3>
+      <p class="ebook-desc">Complete guide to fixing your credit score, removing negative items, and building excellent credit.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$27</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: Credit Repair Mastery ($27)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-            <div class="service-card">
-                <div class="service-icon">🤖</div>
-                <h3>AI Automation Division</h3>
-                <p>Premium AI-powered business automation services generating recurring revenue while training program participants.</p>
-                <ul>
-                    <li>AI phone agents & appointment booking</li>
-                    <li>CRM workflow automation</li>
-                    <li>Customer follow-up systems</li>
-                    <li>Small business automation</li>
-                    <li>$500K-$2.4M revenue potential</li>
-                </ul>
-            </div>
+    <div class="ebook-card">
+      <div class="ebook-icon">🏠</div>
+      <div class="ebook-category">Real Estate</div>
+      <h3 class="ebook-title">Real Estate Investing for Beginners</h3>
+      <p class="ebook-desc">Step-by-step guide to buying your first investment property and building passive income.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$27</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: Real Estate Investing ($27)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-            <div class="service-card">
-                <div class="service-icon">🎖️</div>
-                <h3>Veteran Services</h3>
-                <p>Dedicated veteran housing, benefits navigation, peer support, and employment pathways with military-connected opportunities.</p>
-                <ul>
-                    <li>VA benefits coordination</li>
-                    <li>PTSD & trauma support</li>
-                    <li>Peer veteran networks</li>
-                    <li>Employment placement</li>
-                    <li>Housing stability programs</li>
-                </ul>
-            </div>
+    <div class="ebook-card">
+      <div class="ebook-icon">🤖</div>
+      <div class="ebook-category">AI Tools</div>
+      <h3 class="ebook-title">AI Automation for Small Business</h3>
+      <p class="ebook-desc">Automate your business with AI tools: ChatGPT, customer service bots, marketing automation.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$47</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: AI Automation ($47)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-            <div class="service-card">
-                <div class="service-icon">🚗</div>
-                <h3>Vocational Training</h3>
-                <p>ASE mechanic certification, CDL training, towing operations, and transportation entrepreneurship pathways.</p>
-                <ul>
-                    <li>ASE certification prep</li>
-                    <li>Commercial driver's license</li>
-                    <li>Towing & recovery operations</li>
-                    <li>Transportation business planning</li>
-                    <li>Direct employer partnerships</li>
-                </ul>
-            </div>
+    <div class="ebook-card">
+      <div class="ebook-icon">🚗</div>
+      <div class="ebook-category">Certification</div>
+      <h3 class="ebook-title">CDL Study Guide</h3>
+      <p class="ebook-desc">Pass your commercial driver's license exam. Complete study guide with practice tests.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$17</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: CDL Study Guide ($17)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-            <div class="service-card">
-                <div class="service-icon">💼</div>
-                <h3>Grant Consulting</h3>
-                <p>Expert grant proposal development, funding strategy, and organizational capacity building for nonprofits and social enterprises.</p>
-                <ul>
-                    <li>$5M+ proposals developed</li>
-                    <li>100+ funder relationships</li>
-                    <li>Compliance & reporting</li>
-                    <li>501(c)(3) conversion support</li>
-                    <li>Sustainability planning</li>
-                </ul>
-            </div>
+    <div class="ebook-card">
+      <div class="ebook-icon">💼</div>
+      <div class="ebook-category">Business</div>
+      <h3 class="ebook-title">Starting an LLC in California</h3>
+      <p class="ebook-desc">Complete guide to forming your California LLC. Filing, taxes, compliance, and operations.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$17</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: Starting LLC ($17)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-            <div class="service-card">
-                <div class="service-icon">📊</div>
-                <h3>Business Operations</h3>
-                <p>Complete business automation, workflow optimization, and operational excellence for growing enterprises.</p>
-                <ul>
-                    <li>24/7 automated operations</li>
-                    <li>Einstein AI response systems</li>
-                    <li>Process documentation</li>
-                    <li>System integration</li>
-                    <li>Performance optimization</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    <div class="ebook-card">
+      <div class="ebook-icon">💰</div>
+      <div class="ebook-category">Grants</div>
+      <h3 class="ebook-title">Grant Writing Masterclass</h3>
+      <p class="ebook-desc">Write fundable grant proposals. Needs statements, budgets, logic models, and 20 grant databases.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$47</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: Grant Writing ($47)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-    <!-- Impact Section -->
-    <section class="impact">
-        <div class="impact-content">
-            <div class="impact-text">
-                <h2>MEASURABLE <span class="gold-text">IMPACT</span></h2>
-                <p>Our integrated model delivers proven outcomes through coordinated recovery support, housing stability, modern workforce skills, and employment placement.</p>
+    <div class="ebook-card">
+      <div class="ebook-icon">⚖️</div>
+      <div class="ebook-category">Legal</div>
+      <h3 class="ebook-title">Expungement Guide California</h3>
+      <p class="ebook-desc">Clear your criminal record in California. Eligibility, forms, court process, and post-conviction relief.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$17</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: Expungement Guide ($17)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-                <div class="impact-highlights">
-                    <div class="highlight-item">
-                        <h4>Evidence-Based Results</h4>
-                        <p>70% treatment completion rate, 65% job placement within 90 days, sustained housing stability</p>
-                    </div>
-                    <div class="highlight-item">
-                        <h4>Social Return on Investment</h4>
-                        <p>$3-$12 generated for every dollar invested through reduced recidivism, increased tax revenue, and community stabilization</p>
-                    </div>
-                    <div class="highlight-item">
-                        <h4>Revenue Sustainability</h4>
-                        <p>AI Automation Division creates recurring earned income, reducing long-term grant dependence</p>
-                    </div>
-                </div>
-            </div>
+    <div class="ebook-card">
+      <div class="ebook-icon">🏘️</div>
+      <div class="ebook-category">Housing</div>
+      <h3 class="ebook-title">Section 8 Housing Guide</h3>
+      <p class="ebook-desc">Apply for Section 8 vouchers, navigate waitlists, and find approved housing in California.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$9</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: Section 8 Guide ($9)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-            <div class="impact-stats-grid">
-                <div class="impact-stat-box">
-                    <h3>500+</h3>
-                    <p>Individuals Served Annually</p>
-                </div>
-                <div class="impact-stat-box">
-                    <h3>100+</h3>
-                    <p>Vocational Graduates</p>
-                </div>
-                <div class="impact-stat-box">
-                    <h3>200+</h3>
-                    <p>Veterans Annually</p>
-                </div>
-                <div class="impact-stat-box">
-                    <h3>65%</h3>
-                    <p>Job Placement Rate</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="ebook-card">
+      <div class="ebook-icon">❤️</div>
+      <div class="ebook-category">Recovery</div>
+      <h3 class="ebook-title">Recovery Coach Business</h3>
+      <p class="ebook-desc">Launch a profitable recovery coaching practice. Credentials, client intake, pricing, marketing.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$27</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: Recovery Coach ($27)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-    <!-- Payment Section -->
-    <section class="payment" id="payment">
-        <div class="payment-content">
-            <h2>INVEST IN <span class="gold-text">TRANSFORMATION</span></h2>
-            <p>Support our $5 million initiative or engage premium services</p>
+    <div class="ebook-card">
+      <div class="ebook-icon">🌟</div>
+      <div class="ebook-category">Kids</div>
+      <h3 class="ebook-title">The Little Entrepreneur</h3>
+      <p class="ebook-desc">Children's book teaching kids ages 4-8 the basics of starting a business and earning money.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$9</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: Little Entrepreneur ($9)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-            <div class="payment-methods">
-                <div class="payment-method">
-                    <h3>CHIME PAYMENT</h3>
-                    <a href="https://www.chime.com/pay/ceomrreddix" class="chime-link" target="_blank">$ceomrreddix</a>
-                    <p style="color: var(--gray); font-size: 14px; margin-top: 15px;">Instant transfer via Chime</p>
-                </div>
+    <div class="ebook-card">
+      <div class="ebook-icon">📱</div>
+      <div class="ebook-category">Marketing</div>
+      <h3 class="ebook-title">Digital Marketing on $0 Budget</h3>
+      <p class="ebook-desc">Grow your business with zero ad spend. Organic SEO, Google My Business, social media strategies.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$9</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: Digital Marketing ($9)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-                <div class="payment-method">
-                    <h3>DIRECT CONTACT</h3>
-                    <p style="color: var(--gold); font-size: 20px; margin: 15px 0;">(747) 301-8586</p>
-                    <p style="color: var(--gray); font-size: 14px;">Call for consultation</p>
-                </div>
-            </div>
+    <div class="ebook-card">
+      <div class="ebook-icon">📦</div>
+      <div class="ebook-category">Business</div>
+      <h3 class="ebook-title">Amazon FBA for Beginners</h3>
+      <p class="ebook-desc">Launch an Amazon FBA business. Product research, supplier sourcing, listing creation, PPC advertising.</p>
+      <div class="ebook-footer">
+        <span class="ebook-price">$27</span>
+        <a href="mailto:aaronreddix1987@gmail.com?subject=Order: Amazon FBA ($27)" class="ebook-btn">Buy Now</a>
+      </div>
+    </div>
 
-            <div class="payment-info">
-                <p><strong style="color: var(--gold);">Payment Methods Accepted:</strong></p>
-                <p>Chime • Stripe • Venmo • Cash App • Wire Transfer</p>
-                <p style="margin-top: 20px;"><strong>Email confirmation to:</strong> aaronreddix1987@gmail.com</p>
-            </div>
-        </div>
-    </section>
+  </div>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="contact-content">
-            <h2>CONTACT <span class="gold-text">EXECUTIVE OFFICE</span></h2>
+  <div style="text-align: center; margin-top: 40px; color: var(--gray);">
+    <p><strong>+ 52 MORE EBOOKS AVAILABLE</strong></p>
+    <p style="margin-top: 10px;">Email aaronreddix1987@gmail.com for complete catalog</p>
+  </div>
+</section>
 
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <h3>Chief Executive</h3>
-                    <p><strong style="color: var(--gold);">Aaron Thomas Reddix</strong></p>
-                    <p>Founder & CEO</p>
-                    <p style="margin-top: 15px;">SSN: 608-01-9922</p>
-                    <p>EIN: 32-0663781</p>
-                </div>
+<!-- PAYMENT -->
+<section class="payment" id="payment">
+  <h2>Make Payment</h2>
+  <p style="font-size: 18px; margin-bottom: 30px;">Fast, secure, instant transfer</p>
 
-                <div class="contact-item">
-                    <h3>Phone & Email</h3>
-                    <p><a href="tel:7473018586">(747) 301-8586</a></p>
-                    <p><a href="mailto:aaronreddix1987@gmail.com">aaronreddix1987@gmail.com</a></p>
-                    <p style="margin-top: 15px; color: var(--gray);">Available 24/7 via AI systems</p>
-                </div>
+  <div class="payment-box">
+    <h3 style="margin-bottom: 20px; font-size: 24px;">Primary Payment Method</h3>
+    <a href="https://www.chime.com/pay/ceomrreddix" class="payment-link" target="_blank">$ceomrreddix</a>
+    <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">Click to pay via Chime - Instant transfer</p>
+  </div>
 
-                <div class="contact-item">
-                    <h3>Headquarters</h3>
-                    <p>5643 Case Avenue</p>
-                    <p>North Hollywood, CA 91606</p>
-                    <p style="margin-top: 15px;">California Corporation: C4861952</p>
-                </div>
-            </div>
+  <div class="payment-methods">
+    <p><strong>Alternative Payment Methods:</strong></p>
+    <p>Zelle • Cash App • Venmo • PayPal</p>
+    <p style="margin-top: 10px;">Phone: (747) 301-8586 • Email: aaronreddix1987@gmail.com</p>
+  </div>
+</section>
 
-            <div style="margin-top: 60px;">
-                <a href="tel:7473018586" class="btn btn-primary" style="font-size: 16px; padding: 20px 50px;">SCHEDULE EXECUTIVE CONSULTATION</a>
-            </div>
-        </div>
-    </section>
+<!-- CONTACT -->
+<section class="contact">
+  <h2>Contact CEO</h2>
+  <div class="contact-info">
+    <p><strong>Aaron Thomas Reddix</strong></p>
+    <p>Founder & Chief Executive Officer</p>
+    <p style="margin-top: 20px;"><a href="tel:7473018586">(747) 301-8586</a></p>
+    <p><a href="mailto:aaronreddix1987@gmail.com">aaronreddix1987@gmail.com</a></p>
+    <p style="margin-top: 20px;">Total Transformation Inc.</p>
+    <p>North Hollywood, CA</p>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-logo">TOTAL TRANSFORMATION INC.</div>
-
-            <div class="footer-info">
-                <span class="footer-info-item">California Corporation C4861952</span>
-                <span class="footer-info-item">Federal EIN 32-0663781</span>
-                <span class="footer-info-item">501(c)(3) Conversion In Progress</span>
-            </div>
-
-            <div class="footer-info">
-                <span class="footer-info-item">Recovery Services</span>
-                <span class="footer-info-item">Veteran Housing</span>
-                <span class="footer-info-item">AI Automation</span>
-                <span class="footer-info-item">Workforce Development</span>
-            </div>
-
-            <div class="footer-copyright">
-                &copy; 2026 Total Transformation Inc. All rights reserved.<br>
-                Transforming lives through integrated support, modern skills, and sustainable opportunity.
-            </div>
-        </div>
-    </footer>
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 Total Transformation Inc. All rights reserved.</p>
+  <p style="margin-top: 10px;">64+ Digital Products • Business Solutions • AI Automation</p>
+</footer>
 
 </body>
 </html>
