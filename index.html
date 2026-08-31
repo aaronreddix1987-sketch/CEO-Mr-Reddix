@@ -1594,13 +1594,70 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 </script>
 
-<!-- PAYMENT: Chime only -->
+<!-- PAYMENT: Chime + Auto Delivery -->
+<div id="pay-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#111;border:2px solid #32D74B;padding:30px;max-width:480px;width:92%;border-radius:10px;text-align:center;position:relative;">
+    <button onclick="document.getElementById('pay-modal').style.display='none'" style="position:absolute;top:10px;right:14px;background:transparent;border:none;color:#666;font-size:24px;cursor:pointer;">✕</button>
+    <div style="font-size:36px;margin-bottom:8px;">💚</div>
+    <h2 style="color:#32D74B;font-size:20px;margin:0 0 6px;">PAY WITH CHIME</h2>
+    <p id="pay-title" style="color:#fff;font-size:15px;font-weight:700;margin:0 0 4px;"></p>
+    <p id="pay-price" style="color:#C9A84C;font-size:34px;font-weight:900;margin:0 0 20px;"></p>
+    <a id="pay-chime" href="https://app.chime.com/link/qr?u=ceomrreddix" target="_blank"
+       style="display:block;background:#32D74B;color:#000;padding:16px;font-weight:900;font-size:17px;text-decoration:none;border-radius:6px;margin-bottom:18px;letter-spacing:1px;">
+      💚 OPEN CHIME — $ceomrreddix
+    </a>
+    <div style="background:#1a1a1a;border:1px solid #333;border-radius:6px;padding:14px;text-align:left;">
+      <p style="color:#aaa;font-size:13px;margin:0 0 8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">After you pay:</p>
+      <p style="color:#ccc;font-size:13px;margin:0 0 6px;">📧 Email your Chime receipt to:</p>
+      <p style="color:#C9A84C;font-size:14px;font-weight:900;margin:0 0 10px;">aaronreddix1987@gmail.com</p>
+      <p style="color:#ccc;font-size:13px;margin:0;">Your PDF will be sent to you within minutes.</p>
+    </div>
+    <a id="email-receipt" href="#"
+       style="display:block;margin-top:14px;background:#C9A84C;color:#000;padding:12px;font-weight:900;font-size:14px;text-decoration:none;border-radius:6px;">
+      📧 TAP HERE TO EMAIL RECEIPT AFTER PAYING
+    </a>
+  </div>
+</div>
+
 <script>
+var CHIME = 'https://app.chime.com/link/qr?u=ceomrreddix';
+
+function buyBook(title, price) {
+  document.getElementById('pay-title').textContent = title;
+  document.getElementById('pay-price').textContent = price.indexOf('$')>=0 ? price : '$'+price;
+  document.getElementById('pay-chime').href = CHIME;
+  document.getElementById('email-receipt').href = 'mailto:aaronreddix1987@gmail.com'
+    + '?subject=' + encodeURIComponent('Ebook Receipt: ' + title)
+    + '&body=' + encodeURIComponent('Hi Aaron,
+
+I just paid for: ' + title + ' (' + price + ')
+
+Chime confirmation #: 
+My name: 
+Best email to receive PDF: ');
+  var m = document.getElementById('pay-modal');
+  m.style.display = 'flex';
+  m.onclick = function(e){ if(e.target===m) m.style.display='none'; };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.ebook-btn').forEach(function(btn) {
-    btn.setAttribute('href', 'https://app.chime.com/link/qr?u=ceomrreddix');
-    btn.setAttribute('target', '_blank');
-    btn.removeAttribute('onclick');
+  document.querySelectorAll('.ebook-card').forEach(function(card) {
+    var btn = card.querySelector('.ebook-btn');
+    if (!btn) return;
+    var titleEl = card.querySelector('.ebook-title, h3');
+    var priceEl = card.querySelector('.ebook-price');
+    if (!titleEl || !priceEl) return;
+    var title = titleEl.innerText.replace(/
+/g,' ').trim();
+    var price = priceEl.innerText.trim();
+    btn.setAttribute('href','#');
+    btn.removeAttribute('target');
+    btn.onclick = function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      buyBook(title, price);
+      return false;
+    };
   });
 });
 </script>
