@@ -1594,50 +1594,100 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 </script>
 
-<!-- PAYMENT: Chime + Auto Delivery -->
-<div id="pay-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:9999;align-items:center;justify-content:center;">
-  <div style="background:#111;border:2px solid #32D74B;padding:30px;max-width:480px;width:92%;border-radius:10px;text-align:center;position:relative;">
-    <button onclick="document.getElementById('pay-modal').style.display='none'" style="position:absolute;top:10px;right:14px;background:transparent;border:none;color:#666;font-size:24px;cursor:pointer;">✕</button>
-    <div style="font-size:36px;margin-bottom:8px;">💚</div>
-    <h2 style="color:#32D74B;font-size:20px;margin:0 0 6px;">PAY WITH CHIME</h2>
-    <p id="pay-title" style="color:#fff;font-size:15px;font-weight:700;margin:0 0 4px;"></p>
-    <p id="pay-price" style="color:#C9A84C;font-size:34px;font-weight:900;margin:0 0 20px;"></p>
-    <a id="pay-chime" href="https://app.chime.com/link/qr?u=ceomrreddix" target="_blank"
-       style="display:block;background:#32D74B;color:#000;padding:16px;font-weight:900;font-size:17px;text-decoration:none;border-radius:6px;margin-bottom:18px;letter-spacing:1px;">
-      💚 OPEN CHIME — $ceomrreddix
-    </a>
-    <div style="background:#1a1a1a;border:1px solid #333;border-radius:6px;padding:14px;text-align:left;">
-      <p style="color:#aaa;font-size:13px;margin:0 0 8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">After you pay:</p>
-      <p style="color:#ccc;font-size:13px;margin:0 0 6px;">📧 Email your Chime receipt to:</p>
-      <p style="color:#C9A84C;font-size:14px;font-weight:900;margin:0 0 10px;">aaronreddix1987@gmail.com</p>
-      <p style="color:#ccc;font-size:13px;margin:0;">Your PDF will be sent to you within minutes.</p>
+<!-- FULLY AUTOMATED DELIVERY SYSTEM -->
+<div id="pay-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.93);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#111;border:2px solid #C9A84C;padding:32px 28px;max-width:460px;width:92%;border-radius:12px;text-align:center;position:relative;max-height:90vh;overflow-y:auto;">
+    <button onclick="closeModal()" style="position:absolute;top:10px;right:14px;background:transparent;border:none;color:#555;font-size:26px;cursor:pointer;line-height:1;">✕</button>
+
+    <!-- STEP 1: PAY -->
+    <div id="step-pay">
+      <p style="color:#C9A84C;font-size:11px;font-weight:900;letter-spacing:3px;margin:0 0 10px;">STEP 1 OF 2 — PAY</p>
+      <p id="pay-title" style="color:#fff;font-size:15px;font-weight:700;margin:0 0 4px;"></p>
+      <p id="pay-price" style="color:#C9A84C;font-size:42px;font-weight:900;margin:0 0 22px;"></p>
+      <a id="pay-chime" href="#" target="_blank" onclick="goToStep2()"
+         style="display:block;background:#32D74B;color:#000;padding:18px;font-weight:900;font-size:18px;text-decoration:none;border-radius:8px;margin-bottom:10px;letter-spacing:1px;">
+        💚 PAY NOW — CHIME $ceomrreddix
+      </a>
+      <p style="color:#555;font-size:12px;margin:0;">Tap the button above to pay, then your download unlocks automatically.</p>
     </div>
-    <a id="email-receipt" href="#"
-       style="display:block;margin-top:14px;background:#C9A84C;color:#000;padding:12px;font-weight:900;font-size:14px;text-decoration:none;border-radius:6px;">
-      📧 TAP HERE TO EMAIL RECEIPT AFTER PAYING
-    </a>
+
+    <!-- STEP 2: DOWNLOAD (hidden until they pay) -->
+    <div id="step-download" style="display:none;">
+      <div style="font-size:56px;margin-bottom:12px;">✅</div>
+      <h2 style="color:#32D74B;font-size:22px;margin:0 0 6px;letter-spacing:1px;">PAYMENT SENT!</h2>
+      <p style="color:#aaa;font-size:14px;margin:0 0 20px;">Your ebook is ready. Download it now:</p>
+      <p id="dl-title" style="color:#fff;font-size:15px;font-weight:700;margin:0 0 16px;"></p>
+      <a id="dl-btn" href="#" target="_blank"
+         style="display:block;background:#C9A84C;color:#000;padding:18px;font-weight:900;font-size:18px;text-decoration:none;border-radius:8px;margin-bottom:14px;letter-spacing:1px;">
+        ⬇️ DOWNLOAD YOUR EBOOK NOW
+      </a>
+      <p style="color:#555;font-size:12px;margin:0;">PDF downloads instantly. Check your Downloads folder.</p>
+    </div>
+
   </div>
 </div>
 
 <script>
 var CHIME = 'https://app.chime.com/link/qr?u=ceomrreddix';
 
+// Keyword → Drive download URL mapping
+var EBOOK_MAP = [
+  { keys:['credit','800 score','fico','credit mastery','credit repair','credit builder'],
+    url:'https://drive.google.com/uc?export=download&id=1JLcdnCipbrvebfWJXJl5DVXB396v9Be4' },
+  { keys:['real estate','property','investing','tax deed','rental','airbnb','sober living house'],
+    url:'https://drive.google.com/uc?export=download&id=1WjaP8L8D1USjplVUnvPfBCYQpj_ot5Ll' },
+  { keys:['cyber','hacker','security','network','protect','digital safety'],
+    url:'https://drive.google.com/uc?export=download&id=1U5nmPisUJk7UCcvlO9c6Kpb5Pe13AW9X' },
+  { keys:['medical billing','medical data','him','health information','billing mastery','healthcare billing'],
+    url:'https://drive.google.com/uc?export=download&id=1nIonSncHgTFaWrEoQcwnCcpmtCnq-l7C' },
+  { keys:['medical data','him career','health data'],
+    url:'https://drive.google.com/uc?export=download&id=1qQu-cDEz6g0jkQrtWOJVAR49iJZ3ysGy' },
+  { keys:['tow','auto','vehicle','nemt','transport','dispatch'],
+    url:'https://drive.google.com/uc?export=download&id=13DOIr2iqhBPaW5zyecEqGxlwe36YidQt' },
+  { keys:['code','coding','programming','developer','software','app','python','javascript'],
+    url:'https://drive.google.com/uc?export=download&id=15Yyasvsu6bOR3vb9gsE_4MA54Pprg9Oe' },
+  { keys:['market','marketing','launch','bestsell','sell','sales','funnel','playbook'],
+    url:'https://drive.google.com/uc?export=download&id=1mZKqntL1eFJRbgEd5_kRvxI5NJeqraDi' },
+];
+var DEFAULT_URL = 'https://drive.google.com/uc?export=download&id=1LSWga3S5KsLTU4eHOHdDj6fisuifDdbV';
+
+function getDownloadUrl(title) {
+  var t = title.toLowerCase();
+  for (var i=0; i<EBOOK_MAP.length; i++) {
+    for (var j=0; j<EBOOK_MAP[i].keys.length; j++) {
+      if (t.indexOf(EBOOK_MAP[i].keys[j]) >= 0) return EBOOK_MAP[i].url;
+    }
+  }
+  return DEFAULT_URL;
+}
+
+var currentTitle = '';
 function buyBook(title, price) {
+  currentTitle = title;
+  var p = price.indexOf('$') >= 0 ? price : '$' + price;
   document.getElementById('pay-title').textContent = title;
-  document.getElementById('pay-price').textContent = price.indexOf('$')>=0 ? price : '$'+price;
+  document.getElementById('pay-price').textContent = p;
+  document.getElementById('dl-title').textContent = title;
+  document.getElementById('dl-btn').href = getDownloadUrl(title);
   document.getElementById('pay-chime').href = CHIME;
-  document.getElementById('email-receipt').href = 'mailto:aaronreddix1987@gmail.com'
-    + '?subject=' + encodeURIComponent('Ebook Receipt: ' + title)
-    + '&body=' + encodeURIComponent('Hi Aaron,
-
-I just paid for: ' + title + ' (' + price + ')
-
-Chime confirmation #: 
-My name: 
-Best email to receive PDF: ');
+  document.getElementById('step-pay').style.display = 'block';
+  document.getElementById('step-download').style.display = 'none';
   var m = document.getElementById('pay-modal');
   m.style.display = 'flex';
-  m.onclick = function(e){ if(e.target===m) m.style.display='none'; };
+  m.onclick = function(e){ if(e.target===m) closeModal(); };
+}
+
+function goToStep2() {
+  setTimeout(function(){
+    document.getElementById('step-pay').style.display = 'none';
+    document.getElementById('step-download').style.display = 'block';
+  }, 800);
+}
+
+function closeModal() {
+  document.getElementById('pay-modal').style.display = 'none';
+  document.getElementById('step-pay').style.display = 'block';
+  document.getElementById('step-download').style.display = 'none';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
