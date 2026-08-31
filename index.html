@@ -1603,7 +1603,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     <p style="color:#999;font-size:14px;margin-bottom:20px;">Choose your payment method:</p>
     <a id="stripe-btn" href="https://ttifunnel-6luockni.manus.space/" target="_blank" style="display:block;background:#635bff;color:#fff;padding:16px 20px;font-weight:900;font-size:17px;letter-spacing:1px;text-decoration:none;margin-bottom:16px;border-radius:4px;border:2px solid #7c74ff;">💳 BUY NOW — SECURE STRIPE CHECKOUT</a>
     <div style="color:#666;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;border-top:1px solid #333;padding-top:14px;">OR PAY DIRECTLY:</div>
-    <a id="chime-btn" href="https://chime.com/pay/aarontreddix" target="_blank" style="display:block;background:#32D74B;color:#000;padding:12px 20px;font-weight:900;font-size:15px;letter-spacing:1px;text-decoration:none;margin-bottom:10px;border-radius:4px;">💚 CHIME — @aarontreddix</a>
+    <a id="chime-btn" href="https://chime.com/pay/ceomrreddix" target="_blank" style="display:block;background:#32D74B;color:#000;padding:12px 20px;font-weight:900;font-size:15px;letter-spacing:1px;text-decoration:none;margin-bottom:10px;border-radius:4px;">💚 CHIME — $ceomrreddix</a>
     <a id="cashapp-btn" href="https://cash.app/$aarontreddix" target="_blank" style="display:block;background:#00D54B;color:#000;padding:12px 20px;font-weight:900;font-size:15px;letter-spacing:1px;text-decoration:none;margin-bottom:10px;border-radius:4px;">💵 CASH APP — $aarontreddix</a>
     <a id="zelle-btn" href="#" target="_blank" style="display:block;background:#6d31ed;color:#fff;padding:12px 20px;font-weight:900;font-size:15px;letter-spacing:1px;text-decoration:none;margin-bottom:10px;border-radius:4px;">🟣 ZELLE — (747) 301-8586</a>
     <a id="email-btn" href="#" style="display:block;background:#C9A84C;color:#000;padding:12px 20px;font-weight:900;font-size:15px;letter-spacing:1px;text-decoration:none;border-radius:4px;">📧 EMAIL ORDER — aaronreddix1987@gmail.com</a>
@@ -1619,7 +1619,7 @@ function orderBook(title, price, num) {
   document.getElementById('modal-price').textContent = price.startsWith('$') ? price : '$' + price;
   var priceNum = price.replace('$','').replace(',','').trim();
   var msg = encodeURIComponent('I want to buy: ' + title + ' (' + price + ') - Ebook #' + num);
-  document.getElementById('chime-btn').href = 'https://chime.com/pay/aarontreddix?amount=' + priceNum + '&memo=' + msg;
+  document.getElementById('chime-btn').href = 'https://chime.com/pay/ceomrreddix?amount=' + priceNum + '&memo=' + msg;
   document.getElementById('cashapp-btn').href = 'https://cash.app/$aarontreddix/' + priceNum;
   document.getElementById('zelle-btn').href = 'sms:+17473018586?body=Zelle payment for: ' + decodeURIComponent(msg);
   document.getElementById('email-btn').href = 'mailto:aaronreddix1987@gmail.com?subject=Order: ' + title + '&body=I want to purchase: ' + title + ' (' + price + ')%0A%0AMy Name:%0APhone:%0APayment method used:%0APayment confirmation #:';
