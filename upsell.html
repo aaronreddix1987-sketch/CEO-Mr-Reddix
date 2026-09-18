@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special One-Time Offer - TTI VIP Coaching</title>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+        gtag('event', 'view_upsell');
+    </script>
+
+    <!-- Facebook Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID');
+        fbq('track', 'PageView');
+    </script>
+
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f7fafc;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .urgent-bar {
+            background: #fc8181;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-weight: 600;
+            font-size: 18px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .headline {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .headline h1 {
+            font-size: 42px;
+            color: #2d3748;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .headline .subheadline {
+            font-size: 24px;
+            color: #718096;
+        }
+
+        .video-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, #2d3748, #1a202c);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .offer-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .offer-box h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .price-comparison {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .old-price {
+            font-size: 36px;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .new-price {
+            font-size: 72px;
+            font-weight: bold;
+        }
+
+        .savings-badge {
+            background: #48bb78;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 24px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        .features-list {
+            text-align: left;
+            max-width: 600px;
+            margin: 30px auto;
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .features-list li:before {
+            content: "✓";
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .cta-buttons {
+            margin-top: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #f6ad55;
+            color: #1a202c;
+            padding: 20px 60px;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(246, 173, 85, 0.4);
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(246, 173, 85, 0.6);
+        }
+
+        .decline-button {
+            display: inline-block;
+            color: rgba(255,255,255,0.8);
+            text-decoration: underline;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .decline-button:hover {
+            color: white;
+        }
+
+        .comparison-section {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .comparison-section h2 {
+            font-size: 32px;
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 40px;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .comparison-col {
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .comparison-col.without {
+            background: #fff5f5;
+            border: 2px solid #fc8181;
+        }
+
+        .comparison-col.with {
+            background: #f0fff4;
+            border: 2px solid #48bb78;
+        }
+
+        .comparison-col h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .comparison-col ul {
+            list-style: none;
+        }
+
+        .comparison-col.without li:before {
+            content: "✗";
+            color: #fc8181;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .comparison-col.with li:before {
+            content: "✓";
+            color: #48bb78;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .comparison-col li {
+            padding: 10px 0;
+            color: #2d3748;
+        }
+
+        .testimonials {
+            margin: 40px 0;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .testimonial-info h4 {
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-info p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .stars {
+            color: #f6ad55;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-text {
+            color: #4a5568;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .guarantee-section {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .guarantee-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .countdown-timer {
+            background: rgba(0,0,0,0.2);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .timer-display {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .headline h1 {
+                font-size: 32px;
+            }
+
+            .comparison-table {
+                grid-template-columns: 1fr;
+            }
+
+            .price-comparison {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .new-price {
+                font-size: 56px;
+            }
+
+            .cta-button {
+                padding: 15px 40px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="urgent-bar">
+        ⚡ WAIT! This Special Offer Expires in <span id="timer-bar">10:00</span> Minutes ⚡
+    </div>
+
+    <div class="container">
+        <div class="headline">
+            <h1>One-Time Offer: Get Personal VIP Coaching<br>& Accelerate Your Results by 6 Months!</h1>
+            <p class="subheadline">This exclusive upgrade is only available right now on this page</p>
+        </div>
+
+        <div class="video-section">
+            <div class="video-placeholder">
+                [Insert Upsell Video Here]<br>
+                Explain the VIP coaching benefits
+            </div>
+            <p style="text-align: center; color: #718096;">Watch this short video to see how VIP coaching can transform your results</p>
+        </div>
+
+        <div class="offer-box">
+            <h2>Add VIP 1-on-1 Coaching to Your Program</h2>
+            <p style="font-size: 20px; margin: 20px 0;">Skip the trial and error. Get personalized guidance from someone who's already achieved what you want.</p>
+
+            <div class="price-comparison">
+                <span class="old-price">$2,997</span>
+                <span class="new-price">$997</span>
+            </div>
+
+            <div class="savings-badge">Save $2,000 Today Only!</div>
+
+            <ul class="features-list">
+                <li>6 private 1-on-1 coaching sessions (60 min each)</li>
+                <li>Personalized action plan tailored to YOUR situation</li>
+                <li>Direct access via private Slack channel</li>
+                <li>Weekly accountability check-ins</li>
+                <li>Review of all your work & materials</li>
+                <li>Priority email support (24hr response)</li>
+                <li>Bonus: Marketing campaign review & optimization</li>
+                <li>Bonus: Sales page critique & conversion tips</li>
+            </ul>
+
+            <div class="cta-buttons">
+                <button class="cta-button" onclick="acceptUpsell()">
+                    YES! Add VIP Coaching for $997
+                </button>
+                <br>
+                <a href="download_portal.html" class="decline-button" onclick="trackDecline()">
+                    No thanks, I'll figure it out on my own
+                </a>
+            </div>
+
+            <div class="countdown-timer">
+                <div style="font-size: 18px;">This Offer Expires In:</div>
+                <div class="timer-display" id="countdown">10:00</div>
+                <div style="font-size: 14px; opacity: 0.9;">After this page, the price goes back to $2,997</div>
+            </div>
+        </div>
+
+        <div class="comparison-section">
+            <h2>What's Different With VIP Coaching?</h2>
+            <div class="comparison-table">
+                <div class="comparison-col without">
+                    <h3>Without VIP Coaching</h3>
+                    <ul>
+                        <li>Follow the program at your own pace</li>
+                        <li>Figure out solutions through trial & error</li>
+                        <li>Wait for weekly group coaching calls</li>
+                        <li>Generic advice in community forums</li>
+                        <li>Typical results: 6-12 months to first $5k</li>
+                        <li>Self-review your work & materials</li>
+                        <li>Standard support response time</li>
+                    </ul>
+                </div>
+                <div class="comparison-col with">
+                    <h3>With VIP Coaching</h3>
+                    <ul>
+                        <li>Personalized roadmap for YOUR specific goals</li>
+                        <li>Get expert guidance to avoid costly mistakes</li>
+                        <li>Direct access to your coach anytime</li>
+                        <li>Strategies tailored to YOUR situation</li>
+                        <li>Accelerated results: First $5k in 2-3 months</li>
+                        <li>Professional review & optimization</li>
+                        <li>Priority 24-hour support response</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonials">
+            <h2 style="text-align: center; font-size: 32px; margin-bottom: 30px; color: #2d3748;">
+                What VIP Coaching Students Are Saying
+            </h2>
+
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">KM</div>
+                    <div class="testimonial-info">
+                        <h4>Kelly Martinez</h4>
+                        <p>Made $12k in first 90 days</p>
+                    </div>
+                </div>
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                    "The VIP coaching was worth 10x what I paid. My coach helped me avoid so many mistakes and gave me a clear roadmap. I made my first $12,000 in just 90 days! Without the coaching, I would have wasted months going in circles."
+                </p>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">TR</div>
+                    <div class="testimonial-info">
+                        <h4>Tom Richardson</h4>
+                        <p>Hit $10k/month in 4 months</p>
+                    </div>
+                </div>
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                    "Having direct access to someone who's done it before changed everything. The personalized feedback on my sales page alone probably added $5k to my launch. Best investment I've ever made in my business."
+                </p>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">AL</div>
+                    <div class="testimonial-info">
+                        <h4>Amanda Lee</h4>
+                        <p>Quit teaching job in 6 months</p>
+                    </div>
+                </div>
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                    "I was stuck at $2k/month for weeks. One session with my VIP coach and I had a complete breakthrough. She helped me repositions my offer and I 5x'd my income in the next 60 days. I'm now making more than my teaching salary!"
+                </p>
+            </div>
+        </div>
+
+        <div class="guarantee-section">
+            <h2>🛡️ Still Covered by Our 30-Day Guarantee</h2>
+            <p style="font-size: 18px; max-width: 700px; margin: 0 auto;">
+                Your VIP coaching upgrade is covered by the same 30-day money-back guarantee. If you're not completely satisfied, you get a full refund. Zero risk.
+            </p>
+        </div>
+
+        <div class="offer-box" style="margin-bottom: 60px;">
+            <h2>Ready to Accelerate Your Success?</h2>
+            <p style="font-size: 20px; margin: 20px 0;">
+                Add VIP coaching now for just $997 (normally $2,997)
+            </p>
+
+            <div class="cta-buttons">
+                <button class="cta-button" onclick="acceptUpsell()">
+                    YES! Add VIP Coaching for $997
+                </button>
+                <br>
+                <a href="download_portal.html" class="decline-button" onclick="trackDecline()">
+                    No thanks, I'll continue without coaching
+                </a>
+            </div>
+
+            <p style="margin-top: 30px; font-size: 14px; opacity: 0.9;">
+                One-click purchase - No need to re-enter payment info
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Countdown timer
+        let timeLeft = 600; // 10 minutes
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            document.getElementById('countdown').textContent =
+                `${minutes}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('timer-bar').textContent =
+                `${minutes}:${String(seconds).padStart(2, '0')}`;
+
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                // Redirect when timer expires
+                window.location.href = 'download_portal.html';
+            }
+        }
+
+        setInterval(updateTimer, 1000);
+
+        // One-click upsell purchase
+        async function acceptUpsell() {
+            // Track upsell acceptance
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'upsell_accept', {
+                    'event_category': 'Upsell',
+                    'value': 997
+                });
+            }
+
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'AddToCart', {
+                    value: 997,
+                    currency: 'USD',
+                    content_name: 'VIP Coaching'
+                });
+            }
+
+            // Show processing message
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = 'Processing...';
+
+            try {
+                // Process one-click upsell
+                const response = await fetch('/api/process-upsell', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: 99700, // $997 in cents
+                        product: 'vip-coaching'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Track conversion
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'purchase', {
+                            transaction_id: result.transactionId,
+                            value: 997,
+                            currency: 'USD',
+                            items: [{
+                                item_id: 'vip-coaching',
+                                item_name: 'VIP Coaching Upgrade'
+                            }]
+                        });
+                    }
+
+                    if (typeof fbq !== 'undefined') {
+                        fbq('track', 'Purchase', {
+                            value: 997,
+                            currency: 'USD'
+                        });
+                    }
+
+                    // Redirect to success page
+                    window.location.href = 'download_portal.html?upgraded=true';
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                alert('There was an error processing your upgrade. Please contact support.');
+                button.disabled = false;
+                button.textContent = 'YES! Add VIP Coaching for $997';
+            }
+        }
+
+        function trackDecline() {
+            // Track upsell decline
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'upsell_decline', {
+                    'event_category': 'Upsell'
+                });
+            }
+
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'CustomizeProduct', {
+                    content_name: 'Declined VIP Coaching'
+                });
+            }
+        }
+
+        // Track time on page
+        let pageTime = 0;
+        setInterval(() => {
+            pageTime++;
+            if (pageTime === 30 && typeof gtag !== 'undefined') {
+                gtag('event', 'engaged_upsell', {
+                    'event_category': 'Engagement'
+                });
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
