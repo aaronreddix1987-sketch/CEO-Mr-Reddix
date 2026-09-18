@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTI AI Assistant - Product Finder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0052FF;
+            --secondary: #00D4FF;
+            --dark: #0A0E27;
+            --accent: #FF3366;
+            --success: #00FF88;
+            --gray-bg: #1a1f3a;
+            --gray-light: rgba(255, 255, 255, 0.1);
+            --gray-text: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* FLOATING CHAT BUTTON */
+        .chat-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0, 82, 255, 0.4);
+            transition: all 0.3s ease;
+            z-index: 9998;
+            border: none;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0, 82, 255, 0.6);
+        }
+
+        .chat-button svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .chat-button.active {
+            background: var(--accent);
+        }
+
+        /* NOTIFICATION BADGE */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* CHAT WINDOW */
+        .chat-window {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 420px;
+            height: 650px;
+            background: var(--dark);
+            border-radius: 20px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 9999;
+            border: 1px solid var(--gray-light);
+            animation: slideUp 0.3s ease;
+        }
+
+        .chat-window.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CHAT HEADER */
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .chat-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .header-info h3 {
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .header-info p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* CHAT MESSAGES */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: var(--gray-bg);
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--gray-light);
+            border-radius: 10px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: var(--accent);
+        }
+
+        .message-content {
+            max-width: 75%;
+        }
+
+        .message-bubble {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 12px 16px;
+            border-radius: 15px;
+            color: white;
+            font-size: 14px;
+            line-height: 1.5;
+            border: 1px solid var(--gray-light);
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--gray-text);
+            margin-top: 5px;
+            padding: 0 5px;
+        }
+
+        /* PRODUCT CARDS */
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--gray-light);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .product-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            color: var(--gray-text);
+            font-size: 13px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            color: var(--success);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .product-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+            border: none;
+            flex: 1;
+        }
+
+        .btn-primary-small {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-primary-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 82, 255, 0.4);
+        }
+
+        .btn-secondary-small {
+            background: transparent;
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        .btn-secondary-small:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        /* TYPING INDICATOR */
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            width: fit-content;
+            border: 1px solid var(--gray-light);
+        }
+
+        .typing-indicator.active {
+            display: block;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+
+        /* QUICK ACTIONS */
+        .quick-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .quick-action-btn {
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--gray-light);
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-action-btn:hover {
+            background: rgba(0, 82, 255, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* CHAT INPUT */
+        .chat-input {
+            padding: 20px;
+            background: var(--dark);
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--gray-light);
+            border-radius: 25px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .chat-input input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input input::placeholder {
+            color: var(--gray-text);
+        }
+
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0, 82, 255, 0.4);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .send-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        /* POWERED BY */
+        .powered-by {
+            text-align: center;
+            padding: 10px;
+            font-size: 11px;
+            color: var(--gray-text);
+            border-top: 1px solid var(--gray-light);
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .chat-window {
+                bottom: 0;
+                right: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                max-height: 100vh;
+            }
+
+            .chat-button {
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+            }
+
+            .chat-button svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        /* WELCOME MESSAGE */
+        .welcome-message {
+            background: linear-gradient(135deg, rgba(0, 82, 255, 0.1), rgba(0, 212, 255, 0.1));
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .welcome-text {
+            font-size: 13px;
+            color: var(--gray-text);
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- FLOATING CHAT BUTTON -->
+    <button class="chat-button" id="chatButton" aria-label="Open chat">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3 .97 4.29L2 22l5.71-.97C9 21.64 10.46 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.38 0-2.68-.29-3.87-.8l-.27-.13-2.8.48.48-2.8-.13-.27C4.79 14.68 4.5 13.38 4.5 12c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5-3.36 7.5-7.5 7.5z"/>
+        </svg>
+        <span class="notification-badge">1</span>
+    </button>
+
+    <!-- CHAT WINDOW -->
+    <div class="chat-window" id="chatWindow">
+        <!-- HEADER -->
+        <div class="chat-header">
+            <div class="chat-header-left">
+                <div class="avatar">🤖</div>
+                <div class="header-info">
+                    <h3>TTI Assistant</h3>
+                    <p><span class="status-indicator"></span>Online - Instant Response</p>
+                </div>
+            </div>
+            <button class="close-btn" id="closeBtn" aria-label="Close chat">&times;</button>
+        </div>
+
+        <!-- MESSAGES -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- Initial welcome message -->
+            <div class="message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div class="welcome-message">
+                        <div class="welcome-title">👋 Welcome to Total Transformation Inc!</div>
+                        <div class="welcome-text">
+                            I'm your AI assistant, powered by Einstein Mode. I can help you find the perfect products for credit repair, addiction recovery, business growth, real estate investing, and more.
+                        </div>
+                    </div>
+                    <div class="message-bubble">
+                        What are you looking to transform today?
+                    </div>
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" onclick="quickSearch('credit repair')">💳 Credit Repair</button>
+                        <button class="quick-action-btn" onclick="quickSearch('recovery')">🔄 Recovery</button>
+                        <button class="quick-action-btn" onclick="quickSearch('business')">💼 Business</button>
+                        <button class="quick-action-btn" onclick="quickSearch('real estate')">🏠 Real Estate</button>
+                        <button class="quick-action-btn" onclick="quickSearch('show all')">📚 Browse All</button>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TYPING INDICATOR -->
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+
+        <!-- INPUT -->
+        <div class="chat-input">
+            <div class="input-wrapper">
+                <input
+                    type="text"
+                    id="messageInput"
+                    placeholder="Ask me anything... (e.g., 'Help with credit repair')"
+                    autocomplete="off"
+                />
+                <button class="send-btn" id="sendBtn" aria-label="Send message">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- POWERED BY -->
+        <div class="powered-by">
+            Powered by Einstein Mode AI ⚡ Total Transformation Inc.
+        </div>
+    </div>
+
+    <script>
+        // PRODUCT CATALOG - All 88 TTI Products
+        const PRODUCTS = [
+            // CREDIT & FINANCIAL (10 products)
+            {
+                id: 1,
+                name: "Credit Mastery Bundle - Complete System",
+                price: 79.99,
+                category: "credit",
+                description: "Complete credit repair system with 609 dispute letters, credit monitoring, and financial education.",
+                keywords: ["credit", "credit repair", "609", "credit score", "financial", "debt"],
+                stripeUrl: "https://buy.stripe.com/credit-mastery-bundle"
+            },
+            {
+                id: 2,
+                name: "609 Credit Repair System - Advanced",
+                price: 49.99,
+                category: "credit",
+                description: "Advanced 609 credit dispute system with letter templates and step-by-step guide.",
+                keywords: ["credit", "609", "dispute", "credit repair", "letters"],
+                stripeUrl: "https://buy.stripe.com/609-credit-repair"
+            },
+            {
+                id: 3,
+                name: "Credit Education & Monitoring Package",
+                price: 39.99,
+                category: "credit",
+                description: "Learn credit fundamentals and monitor your progress with expert guidance.",
+                keywords: ["credit", "education", "monitoring", "credit score", "financial literacy"],
+                stripeUrl: "https://buy.stripe.com/credit-education"
+            },
+            {
+                id: 4,
+                name: "Money Mindset Affirmations - Audio Series",
+                price: 29.99,
+                category: "credit",
+                description: "Transform your relationship with money through powerful daily affirmations.",
+                keywords: ["money", "mindset", "affirmations", "wealth", "abundance"],
+                stripeUrl: "https://buy.stripe.com/money-mindset"
+            },
+            {
+                id: 5,
+                name: "Financial Freedom Blueprint",
+                price: 59.99,
+                category: "credit",
+                description: "Step-by-step plan to achieve financial independence and build wealth.",
+                keywords: ["financial", "freedom", "wealth", "money", "independence"],
+                stripeUrl: "https://buy.stripe.com/financial-freedom"
+            },
+
+            // RECOVERY & TRANSFORMATION (25 products)
+            {
+                id: 6,
+                name: "10X Recovery System - Complete Edition",
+                price: 97.00,
+                category: "recovery",
+                description: "Complete recovery system with 12-step integration, relapse prevention, and life transformation.",
+                keywords: ["recovery", "addiction", "12 step", "sobriety", "transformation", "rehab"],
+                stripeUrl: "https://buy.stripe.com/10x-recovery"
+            },
+            {
+                id: 7,
+                name: "12-Step Study Guide - Professional Edition",
+                price: 34.99,
+                category: "recovery",
+                description: "Comprehensive study guide for all 12 steps with exercises and reflections.",
+                keywords: ["12 step", "recovery", "addiction", "aa", "na", "study guide"],
+                stripeUrl: "https://buy.stripe.com/12-step-guide"
+            },
+            {
+                id: 8,
+                name: "RADT Study Guide - Become a Counselor",
+                price: 89.99,
+                category: "recovery",
+                description: "Complete RADT certification study guide to become a recovery counselor.",
+                keywords: ["radt", "counselor", "certification", "recovery", "addiction counseling"],
+                stripeUrl: "https://buy.stripe.com/radt-study"
+            },
+            {
+                id: 9,
+                name: "Relapse Prevention Toolkit",
+                price: 44.99,
+                category: "recovery",
+                description: "Essential tools and strategies to maintain long-term sobriety.",
+                keywords: ["relapse", "prevention", "sobriety", "recovery", "maintenance"],
+                stripeUrl: "https://buy.stripe.com/relapse-prevention"
+            },
+            {
+                id: 10,
+                name: "Recovery Transformation - 90 Day Program",
+                price: 149.99,
+                category: "recovery",
+                description: "90-day intensive recovery program with daily exercises and support.",
+                keywords: ["recovery", "transformation", "90 day", "program", "sobriety"],
+                stripeUrl: "https://buy.stripe.com/recovery-transformation"
+            },
+            {
+                id: 11,
+                name: "Treatment Center Partnership Guide",
+                price: 199.99,
+                category: "recovery",
+                description: "How to partner with treatment centers and build a recovery business.",
+                keywords: ["treatment center", "partnership", "recovery business", "referrals"],
+                stripeUrl: "https://buy.stripe.com/treatment-partnership"
+            },
+
+            // BUSINESS & CAREER (15 products)
+            {
+                id: 12,
+                name: "AI Business Stack - Complete Automation",
+                price: 299.99,
+                category: "business",
+                description: "Complete AI automation system for business with Einstein Mode integration.",
+                keywords: ["ai", "business", "automation", "einstein mode", "tech stack"],
+                stripeUrl: "https://buy.stripe.com/ai-business-stack"
+            },
+            {
+                id: 13,
+                name: "The 10M Blueprint - Complete 12-Book Series",
+                price: 499.99,
+                category: "business",
+                description: "Build a $10M business with this comprehensive 12-book series.",
+                keywords: ["business", "10m", "blueprint", "growth", "scaling", "entrepreneur"],
+                stripeUrl: "https://buy.stripe.com/10m-blueprint"
+            },
+            {
+                id: 14,
+                name: "Cold Call Code - Sales Mastery",
+                price: 79.99,
+                category: "business",
+                description: "Master cold calling and close more deals with proven scripts.",
+                keywords: ["sales", "cold call", "calling", "scripts", "closing"],
+                stripeUrl: "https://buy.stripe.com/cold-call-code"
+            },
+            {
+                id: 15,
+                name: "Digital Undercover Billionaire",
+                price: 149.99,
+                category: "business",
+                description: "Build a business from scratch with zero capital using digital strategies.",
+                keywords: ["business", "startup", "zero capital", "digital", "entrepreneur"],
+                stripeUrl: "https://buy.stripe.com/undercover-billionaire"
+            },
+            {
+                id: 16,
+                name: "Buy Back Your Time - Productivity System",
+                price: 89.99,
+                category: "business",
+                description: "Reclaim your time and focus on what matters with this productivity system.",
+                keywords: ["productivity", "time management", "efficiency", "business"],
+                stripeUrl: "https://buy.stripe.com/buy-back-time"
+            },
+            {
+                id: 17,
+                name: "LinkedIn Lead Generation Mastery",
+                price: 97.00,
+                category: "business",
+                description: "Generate unlimited B2B leads on LinkedIn with proven strategies.",
+                keywords: ["linkedin", "lead generation", "b2b", "networking", "sales"],
+                stripeUrl: "https://buy.stripe.com/linkedin-leads"
+            },
+
+            // REAL ESTATE & INVESTING (8 products)
+            {
+                id: 18,
+                name: "Real Estate Automation - Complete System",
+                price: 197.00,
+                category: "realestate",
+                description: "Automate your real estate investing with AI-powered tools and strategies.",
+                keywords: ["real estate", "investing", "automation", "property", "rental"],
+                stripeUrl: "https://buy.stripe.com/real-estate-automation"
+            },
+            {
+                id: 19,
+                name: "Tax Deed Investing - Properties for Pennies",
+                price: 127.00,
+                category: "realestate",
+                description: "Buy properties for pennies on the dollar through tax deed sales.",
+                keywords: ["tax deed", "investing", "real estate", "property", "foreclosure"],
+                stripeUrl: "https://buy.stripe.com/tax-deed"
+            },
+            {
+                id: 20,
+                name: "Tax Lien Investing - Passive Income",
+                price: 127.00,
+                category: "realestate",
+                description: "Generate passive income through tax lien certificate investing.",
+                keywords: ["tax lien", "investing", "passive income", "real estate"],
+                stripeUrl: "https://buy.stripe.com/tax-lien"
+            },
+            {
+                id: 21,
+                name: "Real Estate Complete Investment Guide",
+                price: 179.99,
+                category: "realestate",
+                description: "Complete guide to real estate investing from beginner to advanced.",
+                keywords: ["real estate", "investing", "property", "rental", "flip"],
+                stripeUrl: "https://buy.stripe.com/real-estate-guide"
+            },
+
+            // AI AUTOMATION (12 products)
+            {
+                id: 22,
+                name: "Einstein Mode Setup - Enterprise AI",
+                price: 999.99,
+                category: "ai",
+                description: "Full Einstein Mode AI setup for enterprise automation and scaling.",
+                keywords: ["ai", "einstein mode", "automation", "enterprise", "setup"],
+                stripeUrl: "https://buy.stripe.com/einstein-setup"
+            },
+            {
+                id: 23,
+                name: "Revenue OS Starter - Launch Your System",
+                price: 497.00,
+                category: "ai",
+                description: "Launch your revenue operating system with AI automation.",
+                keywords: ["revenue", "os", "automation", "ai", "system"],
+                stripeUrl: "https://buy.stripe.com/revenue-os"
+            },
+            {
+                id: 24,
+                name: "FREE 7-Day Revenue OS Trial",
+                price: 0.00,
+                category: "ai",
+                description: "Try Revenue OS free for 7 days - no credit card required.",
+                keywords: ["free", "trial", "revenue os", "ai", "automation"],
+                stripeUrl: "https://buy.stripe.com/free-revenue-trial"
+            },
+            {
+                id: 25,
+                name: "AI Email Automation - 10 Second Response",
+                price: 297.00,
+                category: "ai",
+                description: "AI-powered email system that responds in 10 seconds or less.",
+                keywords: ["ai", "email", "automation", "response", "inbox"],
+                stripeUrl: "https://buy.stripe.com/ai-email"
+            },
+
+            // BUNDLES (12 products)
+            {
+                id: 26,
+                name: "Ultimate Transformation Bundle",
+                price: 997.00,
+                category: "bundle",
+                description: "Complete transformation package: Recovery + Credit + Business + Real Estate.",
+                keywords: ["bundle", "complete", "transformation", "all-in-one"],
+                stripeUrl: "https://buy.stripe.com/ultimate-bundle"
+            },
+            {
+                id: 27,
+                name: "Recovery Professional Bundle",
+                price: 349.99,
+                category: "bundle",
+                description: "Everything you need to become a recovery professional: RADT + 12-Step + Counseling.",
+                keywords: ["bundle", "recovery", "professional", "radt", "counseling"],
+                stripeUrl: "https://buy.stripe.com/recovery-pro-bundle"
+            },
+            {
+                id: 28,
+                name: "Financial Freedom Bundle",
+                price: 249.99,
+                category: "bundle",
+                description: "Complete financial transformation: Credit Repair + Money Mindset + Wealth Building.",
+                keywords: ["bundle", "financial", "credit", "wealth", "money"],
+                stripeUrl: "https://buy.stripe.com/financial-bundle"
+            },
+
+            // SPANISH PRODUCTS (6 products)
+            {
+                id: 59,
+                name: "Sistema 10X Recuperación - Audiolibro Completo (Español)",
+                price: 97.00,
+                category: "recovery",
+                description: "Sistema completo de recuperación en español con integración de 12 pasos.",
+                keywords: ["español", "spanish", "recuperación", "recovery", "adicción"],
+                stripeUrl: "https://buy.stripe.com/10x-recovery-spanish"
+            },
+            {
+                id: 64,
+                name: "Inversión en Tax Deeds - Propiedades por Centavos (Español)",
+                price: 127.00,
+                category: "realestate",
+                description: "Aprende a comprar propiedades por centavos de dólar en español.",
+                keywords: ["español", "spanish", "tax deed", "inversión", "bienes raíces"],
+                stripeUrl: "https://buy.stripe.com/tax-deed-spanish"
+            },
+            {
+                id: 67,
+                name: "Cómo Convertirse en Consejero - Guía RADT (Español)",
+                price: 89.99,
+                category: "recovery",
+                description: "Guía completa para certificación RADT en español.",
+                keywords: ["español", "spanish", "radt", "consejero", "certificación"],
+                stripeUrl: "https://buy.stripe.com/radt-spanish"
+            },
+            {
+                id: 69,
+                name: "Reparación de Crédito y Educación Financiera (Español)",
+                price: 79.99,
+                category: "credit",
+                description: "Sistema completo de reparación de crédito en español.",
+                keywords: ["español", "spanish", "crédito", "credit", "financiero"],
+                stripeUrl: "https://buy.stripe.com/credit-spanish"
+            },
+            {
+                id: 78,
+                name: "Sistema 10X Recuperación - Edición Completa (Español)",
+                price: 149.99,
+                category: "recovery",
+                description: "Edición completa del sistema de recuperación en español.",
+                keywords: ["español", "spanish", "recuperación", "recovery", "completo"],
+                stripeUrl: "https://buy.stripe.com/10x-complete-spanish"
+            },
+            {
+                id: 80,
+                name: "Inversión en Bienes Raíces - Guía Completa (Español)",
+                price: 179.99,
+                category: "realestate",
+                description: "Guía completa de inversión en bienes raíces en español.",
+                keywords: ["español", "spanish", "bienes raíces", "real estate", "inversión"],
+                stripeUrl: "https://buy.stripe.com/real-estate-spanish"
+            },
+
+            // Additional products to reach 88 total
+            {
+                id: 29,
+                name: "Grant Writing Mastery - $5B Pipeline",
+                price: 397.00,
+                category: "business",
+                description: "Learn to write winning grant applications for federal, state, and foundation funding.",
+                keywords: ["grant", "writing", "funding", "nonprofit", "business"],
+                stripeUrl: "https://buy.stripe.com/grant-writing"
+            },
+            {
+                id: 30,
+                name: "AI Content Creation System",
+                price: 197.00,
+                category: "ai",
+                description: "Create unlimited content with AI-powered tools and templates.",
+                keywords: ["ai", "content", "creation", "marketing", "automation"],
+                stripeUrl: "https://buy.stripe.com/ai-content"
+            },
+            {
+                id: 31,
+                name: "Social Media Automation Suite",
+                price: 247.00,
+                category: "ai",
+                description: "Automate all your social media with AI-powered scheduling and content.",
+                keywords: ["social media", "automation", "ai", "marketing", "content"],
+                stripeUrl: "https://buy.stripe.com/social-automation"
+            },
+            {
+                id: 32,
+                name: "SEO Domination - Rank #1 Fast",
+                price: 297.00,
+                category: "business",
+                description: "Rank #1 on Google with proven SEO strategies and automation.",
+                keywords: ["seo", "google", "ranking", "traffic", "marketing"],
+                stripeUrl: "https://buy.stripe.com/seo-domination"
+            },
+            {
+                id: 33,
+                name: "Funnel Builder Pro - High Converting Funnels",
+                price: 347.00,
+                category: "business",
+                description: "Build high-converting sales funnels that generate revenue 24/7.",
+                keywords: ["funnel", "sales", "conversion", "marketing", "automation"],
+                stripeUrl: "https://buy.stripe.com/funnel-builder"
+            },
+            {
+                id: 34,
+                name: "Email Marketing Mastery",
+                price: 197.00,
+                category: "business",
+                description: "Build and monetize your email list with proven campaigns.",
+                keywords: ["email", "marketing", "list building", "campaigns", "automation"],
+                stripeUrl: "https://buy.stripe.com/email-marketing"
+            },
+            {
+                id: 35,
+                name: "Coaching Business Blueprint",
+                price: 397.00,
+                category: "business",
+                description: "Build a 6-figure coaching business from scratch.",
+                keywords: ["coaching", "business", "consulting", "entrepreneur"],
+                stripeUrl: "https://buy.stripe.com/coaching-blueprint"
+            },
+            {
+                id: 36,
+                name: "Consulting Empire - High Ticket Sales",
+                price: 497.00,
+                category: "business",
+                description: "Land high-ticket consulting clients and build a consulting empire.",
+                keywords: ["consulting", "high ticket", "sales", "business", "clients"],
+                stripeUrl: "https://buy.stripe.com/consulting-empire"
+            },
+            {
+                id: 37,
+                name: "Personal Branding Masterclass",
+                price: 297.00,
+                category: "business",
+                description: "Build a powerful personal brand that attracts opportunities.",
+                keywords: ["personal brand", "branding", "marketing", "influence"],
+                stripeUrl: "https://buy.stripe.com/personal-branding"
+            },
+            {
+                id: 38,
+                name: "Passive Income Blueprint - 7 Streams",
+                price: 347.00,
+                category: "business",
+                description: "Build 7 passive income streams that generate revenue 24/7.",
+                keywords: ["passive income", "revenue", "streams", "automation", "wealth"],
+                stripeUrl: "https://buy.stripe.com/passive-income"
+            },
+            {
+                id: 39,
+                name: "YouTube Growth System - Monetization Fast",
+                price: 247.00,
+                category: "business",
+                description: "Grow your YouTube channel and monetize quickly with proven strategies.",
+                keywords: ["youtube", "growth", "monetization", "video", "content"],
+                stripeUrl: "https://buy.stripe.com/youtube-growth"
+            },
+            {
+                id: 40,
+                name: "Podcast Launch Formula",
+                price: 197.00,
+                category: "business",
+                description: "Launch and grow a profitable podcast from scratch.",
+                keywords: ["podcast", "audio", "content", "monetization", "growth"],
+                stripeUrl: "https://buy.stripe.com/podcast-launch"
+            },
+            {
+                id: 41,
+                name: "E-commerce Domination - Shopify Success",
+                price: 397.00,
+                category: "business",
+                description: "Build a 7-figure e-commerce business with Shopify.",
+                keywords: ["ecommerce", "shopify", "online store", "sales", "business"],
+                stripeUrl: "https://buy.stripe.com/ecommerce-domination"
+            },
+            {
+                id: 42,
+                name: "Dropshipping Mastery - No Inventory Needed",
+                price: 297.00,
+                category: "business",
+                description: "Build a profitable dropshipping business without inventory.",
+                keywords: ["dropshipping", "ecommerce", "business", "online", "sales"],
+                stripeUrl: "https://buy.stripe.com/dropshipping"
+            },
+            {
+                id: 43,
+                name: "Amazon FBA Complete Guide",
+                price: 347.00,
+                category: "business",
+                description: "Sell on Amazon FBA and build a 6-figure business.",
+                keywords: ["amazon", "fba", "ecommerce", "selling", "business"],
+                stripeUrl: "https://buy.stripe.com/amazon-fba"
+            },
+            {
+                id: 44,
+                name: "Airbnb Arbitrage - No Property Needed",
+                price: 297.00,
+                category: "realestate",
+                description: "Make money with Airbnb without owning property.",
+                keywords: ["airbnb", "arbitrage", "rental", "real estate", "passive income"],
+                stripeUrl: "https://buy.stripe.com/airbnb-arbitrage"
+            },
+            {
+                id: 45,
+                name: "Rental Property Cash Flow System",
+                price: 247.00,
+                category: "realestate",
+                description: "Build cash-flowing rental properties that generate passive income.",
+                keywords: ["rental", "property", "cash flow", "real estate", "investing"],
+                stripeUrl: "https://buy.stripe.com/rental-cashflow"
+            },
+            {
+                id: 46,
+                name: "House Flipping Formula",
+                price: 347.00,
+                category: "realestate",
+                description: "Flip houses for profit with proven strategies.",
+                keywords: ["house flip", "flipping", "real estate", "investing", "profit"],
+                stripeUrl: "https://buy.stripe.com/house-flipping"
+            },
+            {
+                id: 47,
+                name: "Wholesaling Real Estate - Quick Cash",
+                price: 197.00,
+                category: "realestate",
+                description: "Make quick cash wholesaling real estate with no money down.",
+                keywords: ["wholesaling", "real estate", "cash", "investing", "deals"],
+                stripeUrl: "https://buy.stripe.com/wholesaling"
+            },
+            {
+                id: 48,
+                name: "BRRRR Method - Buy, Rehab, Rent, Refinance, Repeat",
+                price: 297.00,
+                category: "realestate",
+                description: "Scale your real estate portfolio with the BRRRR method.",
+                keywords: ["brrrr", "real estate", "investing", "rental", "portfolio"],
+                stripeUrl: "https://buy.stripe.com/brrrr-method"
+            },
+            {
+                id: 49,
+                name: "Credit Score Hacking - 100 Point Boost",
+                price: 67.00,
+                category: "credit",
+                description: "Boost your credit score by 100+ points in 90 days or less.",
+                keywords: ["credit", "score", "boost", "hacking", "repair"],
+                stripeUrl: "https://buy.stripe.com/credit-hacking"
+            },
+            {
+                id: 50,
+                name: "Debt Freedom Blueprint",
+                price: 97.00,
+                category: "credit",
+                description: "Get out of debt fast with proven strategies and systems.",
+                keywords: ["debt", "freedom", "payoff", "financial", "credit"],
+                stripeUrl: "https://buy.stripe.com/debt-freedom"
+            },
+            {
+                id: 51,
+                name: "Budget Mastery - Financial Control",
+                price: 47.00,
+                category: "credit",
+                description: "Take control of your finances with expert budgeting strategies.",
+                keywords: ["budget", "budgeting", "financial", "money", "control"],
+                stripeUrl: "https://buy.stripe.com/budget-mastery"
+            },
+            {
+                id: 52,
+                name: "Investment Portfolio Builder",
+                price: 197.00,
+                category: "credit",
+                description: "Build a diversified investment portfolio for long-term wealth.",
+                keywords: ["investment", "portfolio", "stocks", "wealth", "financial"],
+                stripeUrl: "https://buy.stripe.com/investment-portfolio"
+            },
+            {
+                id: 53,
+                name: "Retirement Planning Guide",
+                price: 147.00,
+                category: "credit",
+                description: "Plan for a comfortable retirement with expert guidance.",
+                keywords: ["retirement", "planning", "401k", "ira", "financial"],
+                stripeUrl: "https://buy.stripe.com/retirement-planning"
+            },
+            {
+                id: 54,
+                name: "Sober Living Guide - First Year Success",
+                price: 79.99,
+                category: "recovery",
+                description: "Navigate your first year of sobriety with confidence.",
+                keywords: ["sobriety", "sober living", "recovery", "first year", "addiction"],
+                stripeUrl: "https://buy.stripe.com/sober-living"
+            },
+            {
+                id: 55,
+                name: "Family Recovery Program",
+                price: 127.00,
+                category: "recovery",
+                description: "Heal family relationships affected by addiction.",
+                keywords: ["family", "recovery", "relationships", "addiction", "healing"],
+                stripeUrl: "https://buy.stripe.com/family-recovery"
+            },
+            {
+                id: 56,
+                name: "Dual Diagnosis Treatment Guide",
+                price: 97.00,
+                category: "recovery",
+                description: "Address addiction and mental health together.",
+                keywords: ["dual diagnosis", "mental health", "addiction", "recovery", "treatment"],
+                stripeUrl: "https://buy.stripe.com/dual-diagnosis"
+            },
+            {
+                id: 57,
+                name: "Spiritual Recovery Journey",
+                price: 87.00,
+                category: "recovery",
+                description: "Deepen your spiritual practice in recovery.",
+                keywords: ["spiritual", "spirituality", "recovery", "meditation", "healing"],
+                stripeUrl: "https://buy.stripe.com/spiritual-recovery"
+            },
+            {
+                id: 58,
+                name: "Recovery Coaching Certification",
+                price: 497.00,
+                category: "recovery",
+                description: "Become a certified recovery coach and help others.",
+                keywords: ["coaching", "certification", "recovery", "counseling", "career"],
+                stripeUrl: "https://buy.stripe.com/recovery-coaching"
+            },
+            {
+                id: 60,
+                name: "Substance Abuse Education - Professional",
+                price: 197.00,
+                category: "recovery",
+                description: "Professional-level substance abuse education and training.",
+                keywords: ["substance abuse", "education", "training", "professional", "counseling"],
+                stripeUrl: "https://buy.stripe.com/substance-education"
+            },
+            {
+                id: 61,
+                name: "Peer Support Specialist Training",
+                price: 347.00,
+                category: "recovery",
+                description: "Become a certified peer support specialist.",
+                keywords: ["peer support", "specialist", "certification", "recovery", "counseling"],
+                stripeUrl: "https://buy.stripe.com/peer-support"
+            },
+            {
+                id: 62,
+                name: "Trauma-Informed Care Training",
+                price: 297.00,
+                category: "recovery",
+                description: "Learn trauma-informed approaches to recovery work.",
+                keywords: ["trauma", "informed care", "training", "recovery", "counseling"],
+                stripeUrl: "https://buy.stripe.com/trauma-informed"
+            },
+            {
+                id: 63,
+                name: "Motivational Interviewing Skills",
+                price: 247.00,
+                category: "recovery",
+                description: "Master motivational interviewing for recovery counseling.",
+                keywords: ["motivational interviewing", "counseling", "skills", "recovery", "therapy"],
+                stripeUrl: "https://buy.stripe.com/motivational-interviewing"
+            },
+            {
+                id: 65,
+                name: "Group Facilitation Mastery",
+                price: 197.00,
+                category: "recovery",
+                description: "Lead powerful recovery groups with confidence.",
+                keywords: ["group", "facilitation", "recovery", "counseling", "leadership"],
+                stripeUrl: "https://buy.stripe.com/group-facilitation"
+            },
+            {
+                id: 66,
+                name: "Case Management Excellence",
+                price: 247.00,
+                category: "recovery",
+                description: "Excel at recovery case management and client coordination.",
+                keywords: ["case management", "recovery", "counseling", "coordination", "clients"],
+                stripeUrl: "https://buy.stripe.com/case-management"
+            },
+            {
+                id: 68,
+                name: "Recovery Marketing System",
+                price: 397.00,
+                category: "recovery",
+                description: "Market your recovery business and attract clients.",
+                keywords: ["marketing", "recovery", "business", "clients", "growth"],
+                stripeUrl: "https://buy.stripe.com/recovery-marketing"
+            },
+            {
+                id: 70,
+                name: "Treatment Center Start-Up Guide",
+                price: 797.00,
+                category: "recovery",
+                description: "Start and operate a successful treatment center.",
+                keywords: ["treatment center", "startup", "business", "recovery", "operations"],
+                stripeUrl: "https://buy.stripe.com/treatment-startup"
+            },
+            {
+                id: 71,
+                name: "Sober Home Operations Manual",
+                price: 497.00,
+                category: "recovery",
+                description: "Run a profitable and compliant sober living home.",
+                keywords: ["sober home", "sober living", "operations", "business", "recovery"],
+                stripeUrl: "https://buy.stripe.com/sober-home-ops"
+            },
+            {
+                id: 72,
+                name: "Recovery Insurance Billing",
+                price: 347.00,
+                category: "recovery",
+                description: "Master insurance billing for recovery services.",
+                keywords: ["insurance", "billing", "recovery", "business", "reimbursement"],
+                stripeUrl: "https://buy.stripe.com/recovery-billing"
+            },
+            {
+                id: 73,
+                name: "Compliance & Licensing Guide",
+                price: 297.00,
+                category: "recovery",
+                description: "Navigate compliance and licensing for recovery businesses.",
+                keywords: ["compliance", "licensing", "recovery", "business", "regulations"],
+                stripeUrl: "https://buy.stripe.com/compliance-licensing"
+            },
+            {
+                id: 74,
+                name: "Chatbot Builder - AI Customer Service",
+                price: 397.00,
+                category: "ai",
+                description: "Build AI chatbots that handle customer service 24/7.",
+                keywords: ["chatbot", "ai", "customer service", "automation", "support"],
+                stripeUrl: "https://buy.stripe.com/chatbot-builder"
+            },
+            {
+                id: 75,
+                name: "AI Sales Assistant Setup",
+                price: 497.00,
+                category: "ai",
+                description: "Deploy an AI sales assistant that closes deals automatically.",
+                keywords: ["ai", "sales", "assistant", "automation", "closing"],
+                stripeUrl: "https://buy.stripe.com/ai-sales"
+            },
+            {
+                id: 76,
+                name: "Voice AI Integration",
+                price: 597.00,
+                category: "ai",
+                description: "Integrate voice AI for phone and customer interactions.",
+                keywords: ["voice", "ai", "phone", "automation", "customer service"],
+                stripeUrl: "https://buy.stripe.com/voice-ai"
+            },
+            {
+                id: 77,
+                name: "AI Analytics Dashboard",
+                price: 297.00,
+                category: "ai",
+                description: "Track all your business metrics with AI-powered analytics.",
+                keywords: ["analytics", "dashboard", "ai", "metrics", "tracking"],
+                stripeUrl: "https://buy.stripe.com/ai-analytics"
+            },
+            {
+                id: 79,
+                name: "Workflow Automation Builder",
+                price: 447.00,
+                category: "ai",
+                description: "Build custom workflow automations for any business process.",
+                keywords: ["workflow", "automation", "ai", "business", "processes"],
+                stripeUrl: "https://buy.stripe.com/workflow-automation"
+            },
+            {
+                id: 81,
+                name: "API Integration Mastery",
+                price: 497.00,
+                category: "ai",
+                description: "Connect all your tools with API integrations and automation.",
+                keywords: ["api", "integration", "automation", "tools", "connections"],
+                stripeUrl: "https://buy.stripe.com/api-integration"
+            },
+            {
+                id: 82,
+                name: "No-Code App Builder",
+                price: 397.00,
+                category: "ai",
+                description: "Build custom apps without coding using AI-powered tools.",
+                keywords: ["no code", "app", "builder", "ai", "development"],
+                stripeUrl: "https://buy.stripe.com/no-code-builder"
+            },
+            {
+                id: 83,
+                name: "Data Science for Business",
+                price: 497.00,
+                category: "ai",
+                description: "Use data science and AI to make better business decisions.",
+                keywords: ["data science", "ai", "analytics", "business", "decisions"],
+                stripeUrl: "https://buy.stripe.com/data-science"
+            },
+            {
+                id: 84,
+                name: "Machine Learning Basics",
+                price: 347.00,
+                category: "ai",
+                description: "Learn machine learning fundamentals for business applications.",
+                keywords: ["machine learning", "ai", "ml", "business", "technology"],
+                stripeUrl: "https://buy.stripe.com/machine-learning"
+            },
+            {
+                id: 85,
+                name: "Business Intelligence Suite",
+                price: 597.00,
+                category: "ai",
+                description: "Complete business intelligence system with AI insights.",
+                keywords: ["business intelligence", "bi", "ai", "analytics", "insights"],
+                stripeUrl: "https://buy.stripe.com/business-intelligence"
+            },
+            {
+                id: 86,
+                name: "Entrepreneur Starter Bundle",
+                price: 697.00,
+                category: "bundle",
+                description: "Everything you need to start and grow your business.",
+                keywords: ["bundle", "entrepreneur", "startup", "business", "complete"],
+                stripeUrl: "https://buy.stripe.com/entrepreneur-bundle"
+            },
+            {
+                id: 87,
+                name: "Real Estate Investor Bundle",
+                price: 797.00,
+                category: "bundle",
+                description: "Complete real estate investing toolkit with all strategies.",
+                keywords: ["bundle", "real estate", "investing", "property", "complete"],
+                stripeUrl: "https://buy.stripe.com/realestate-bundle"
+            },
+            {
+                id: 88,
+                name: "AI Automation Master Bundle",
+                price: 1497.00,
+                category: "bundle",
+                description: "Every AI automation tool and training - complete Einstein Mode.",
+                keywords: ["bundle", "ai", "automation", "einstein mode", "complete", "master"],
+                stripeUrl: "https://buy.stripe.com/ai-master-bundle"
+            }
+        ];
+
+        // CHAT STATE
+        let chatHistory = [];
+        let isTyping = false;
+
+        // DOM ELEMENTS
+        const chatButton = document.getElementById('chatButton');
+        const chatWindow = document.getElementById('chatWindow');
+        const closeBtn = document.getElementById('closeBtn');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        // TOGGLE CHAT WINDOW
+        chatButton.addEventListener('click', () => {
+            chatWindow.classList.toggle('active');
+            chatButton.classList.toggle('active');
+            if (chatWindow.classList.contains('active')) {
+                messageInput.focus();
+                // Remove notification badge
+                const badge = document.querySelector('.notification-badge');
+                if (badge) badge.style.display = 'none';
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            chatWindow.classList.remove('active');
+            chatButton.classList.remove('active');
+        });
+
+        // SEND MESSAGE
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message || isTyping) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            messageInput.value = '';
+
+            // Process message
+            processMessage(message);
+        }
+
+        function addMessage(text, sender = 'bot', products = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = sender === 'user' ? '👤' : '🤖';
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.textContent = text;
+
+            const time = document.createElement('div');
+            time.className = 'message-time';
+            time.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            contentDiv.appendChild(bubble);
+
+            // Add product cards if provided
+            if (products && products.length > 0) {
+                products.forEach(product => {
+                    const card = createProductCard(product);
+                    contentDiv.appendChild(card);
+                });
+            }
+
+            contentDiv.appendChild(time);
+
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(contentDiv);
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Store in history
+            chatHistory.push({ text, sender, timestamp: new Date() });
+        }
+
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+
+            card.innerHTML = `
+                <div class="product-title">${product.name}</div>
+                <div class="product-description">${product.description}</div>
+                <div class="product-price">$${product.price.toFixed(2)}</div>
+                <div class="product-buttons">
+                    <a href="${product.stripeUrl}" target="_blank" class="product-btn btn-primary-small">
+                        Buy Now
+                    </a>
+                    <button class="product-btn btn-secondary-small" onclick="learnMore(${product.id})">
+                        Learn More
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function showTyping() {
+            isTyping = true;
+            typingIndicator.classList.add('active');
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            isTyping = false;
+            typingIndicator.classList.remove('active');
+        }
+
+        function processMessage(message) {
+            showTyping();
+
+            // Simulate AI processing delay
+            setTimeout(() => {
+                hideTyping();
+
+                const lowerMessage = message.toLowerCase();
+                let response = '';
+                let matchedProducts = [];
+
+                // CREDIT REPAIR
+                if (lowerMessage.includes('credit') || lowerMessage.includes('credit score') || lowerMessage.includes('609') || lowerMessage.includes('credit repair')) {
+                    response = "Great! I can help you with credit repair. Here are our top credit repair solutions:";
+                    matchedProducts = PRODUCTS.filter(p => p.category === 'credit').slice(0, 3);
+                }
+                // RECOVERY
+                else if (lowerMessage.includes('recovery') || lowerMessage.includes('addiction') || lowerMessage.includes('sobriety') || lowerMessage.includes('12 step') || lowerMessage.includes('rehab')) {
+                    response = "I understand you're looking for recovery resources. Here are our most popular recovery programs:";
+                    matchedProducts = PRODUCTS.filter(p => p.category === 'recovery').slice(0, 3);
+                }
+                // BUSINESS
+                else if (lowerMessage.includes('business') || lowerMessage.includes('entrepreneur') || lowerMessage.includes('startup') || lowerMessage.includes('start a business')) {
+                    response = "Excellent! Let's get your business started. Check out these business growth programs:";
+                    matchedProducts = PRODUCTS.filter(p => p.category === 'business').slice(0, 3);
+                }
+                // REAL ESTATE
+                else if (lowerMessage.includes('real estate') || lowerMessage.includes('property') || lowerMessage.includes('investing') || lowerMessage.includes('rental')) {
+                    response = "Perfect! Real estate investing is a great wealth builder. Here are our best real estate programs:";
+                    matchedProducts = PRODUCTS.filter(p => p.category === 'realestate').slice(0, 3);
+                }
+                // AI AUTOMATION
+                else if (lowerMessage.includes('ai') || lowerMessage.includes('automation') || lowerMessage.includes('einstein') || lowerMessage.includes('automate')) {
+                    response = "Amazing! AI automation can transform your business. Check out our AI solutions:";
+                    matchedProducts = PRODUCTS.filter(p => p.category === 'ai').slice(0, 3);
+                }
+                // BUNDLES
+                else if (lowerMessage.includes('bundle') || lowerMessage.includes('package') || lowerMessage.includes('everything') || lowerMessage.includes('all')) {
+                    response = "Want everything? Our bundles give you the best value. Here are our complete packages:";
+                    matchedProducts = PRODUCTS.filter(p => p.category === 'bundle').slice(0, 3);
+                }
+                // SHOW ALL
+                else if (lowerMessage.includes('show all') || lowerMessage.includes('browse') || lowerMessage.includes('catalog') || lowerMessage.includes('products')) {
+                    response = "Here are some of our most popular products across all categories:";
+                    matchedProducts = [
+                        PRODUCTS.find(p => p.id === 6), // 10X Recovery
+                        PRODUCTS.find(p => p.id === 1), // Credit Mastery
+                        PRODUCTS.find(p => p.id === 12), // AI Business Stack
+                        PRODUCTS.find(p => p.id === 18), // Real Estate Automation
+                        PRODUCTS.find(p => p.id === 26), // Ultimate Bundle
+                    ].filter(Boolean);
+                }
+                // SPANISH
+                else if (lowerMessage.includes('español') || lowerMessage.includes('spanish')) {
+                    response = "¡Perfecto! Tenemos productos en español. Here are our Spanish products:";
+                    matchedProducts = PRODUCTS.filter(p => p.keywords.includes('español')).slice(0, 3);
+                }
+                // HELP / GENERAL
+                else {
+                    response = "I'm here to help you find the perfect product! Tell me what you're looking for:\n\n💳 Credit Repair\n🔄 Recovery & Sobriety\n💼 Business Growth\n🏠 Real Estate Investing\n🤖 AI Automation\n📦 Complete Bundles\n\nWhat interests you?";
+                }
+
+                addMessage(response, 'bot', matchedProducts);
+
+            }, 1500); // 1.5 second delay for realism
+        }
+
+        // QUICK SEARCH FUNCTION
+        window.quickSearch = function(query) {
+            messageInput.value = query;
+            sendMessage();
+        };
+
+        // LEARN MORE FUNCTION
+        window.learnMore = function(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (product) {
+                const message = `Tell me more about: ${product.name}`;
+                addMessage(message, 'user');
+
+                showTyping();
+                setTimeout(() => {
+                    hideTyping();
+                    const response = `${product.name} is one of our most popular products!\n\n${product.description}\n\nPrice: $${product.price.toFixed(2)}\n\nWould you like to purchase this, or would you like to see similar products?`;
+                    addMessage(response, 'bot', [product]);
+                }, 1000);
+            }
+        };
+
+        // INITIALIZE - Show welcome after 2 seconds
+        setTimeout(() => {
+            if (!chatWindow.classList.contains('active')) {
+                // Pulse notification badge
+                const badge = document.querySelector('.notification-badge');
+                if (badge) {
+                    badge.style.animation = 'pulse 1s infinite';
+                }
+            }
+        }, 2000);
+
+        // Save chat history to localStorage
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('ttiChatHistory', JSON.stringify(chatHistory));
+        });
+
+        // Load chat history on page load
+        window.addEventListener('load', () => {
+            const savedHistory = localStorage.getItem('ttiChatHistory');
+            if (savedHistory) {
+                chatHistory = JSON.parse(savedHistory);
+                // Optionally restore messages to UI
+            }
+        });
+    </script>
+</body>
+</html>
