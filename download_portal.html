@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Portal - TTI Success System</title>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f7fafc;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .welcome-banner {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .welcome-banner h1 {
+            font-size: 36px;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .welcome-banner p {
+            color: #718096;
+            font-size: 18px;
+        }
+
+        .progress-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(#667eea 0% 15%, #e2e8f0 15% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .progress-inner {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-percent {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .action-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .action-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .action-card h3 {
+            font-size: 20px;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .action-card p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #2d3748;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modules-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .module-card:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .module-header {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 20px;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .module-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .module-info h3 {
+            font-size: 22px;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .module-info p {
+            color: #718096;
+        }
+
+        .module-status {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.completed {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-badge.in-progress {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+
+        .status-badge.locked {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .module-lessons {
+            padding: 0 25px 25px;
+            display: none;
+        }
+
+        .module-lessons.active {
+            display: block;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #f7fafc;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lesson-item:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+
+        .lesson-icon {
+            font-size: 24px;
+        }
+
+        .lesson-info {
+            flex: 1;
+        }
+
+        .lesson-info h4 {
+            color: #2d3748;
+            margin-bottom: 3px;
+        }
+
+        .lesson-info p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .lesson-duration {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .bonus-section {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .bonus-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .bonus-card {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .bonus-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .download-button {
+            display: inline-block;
+            background: white;
+            color: #48bb78;
+            padding: 10px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .welcome-banner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .welcome-banner h1 {
+                font-size: 28px;
+            }
+
+            .module-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .module-status {
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">TTI Success System</div>
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">TM</div>
+                <div id="user-name">Member</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <div>
+                <h1>Welcome Back, <span id="welcome-name">Member</span>!</h1>
+                <p>You're making great progress. Keep up the momentum!</p>
+            </div>
+            <div class="progress-circle">
+                <div class="progress-inner">
+                    <div class="progress-percent">15%</div>
+                    <div class="progress-label">Complete</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="#" class="action-card" onclick="openCommunity()">
+                <div class="action-icon">👥</div>
+                <h3>Join Community</h3>
+                <p>Connect with 5,000+ members</p>
+            </a>
+            <a href="#" class="action-card" onclick="scheduleCall()">
+                <div class="action-icon">📅</div>
+                <h3>Next Live Call</h3>
+                <p>Wednesday, 7 PM ET</p>
+            </a>
+            <a href="#" class="action-card" onclick="getSupport()">
+                <div class="action-icon">💬</div>
+                <h3>Get Support</h3>
+                <p>Ask questions, get help</p>
+            </a>
+            <a href="#resources" class="action-card">
+                <div class="action-icon">📚</div>
+                <h3>Resources</h3>
+                <p>Templates & downloads</p>
+            </a>
+        </div>
+
+        <!-- Training Modules -->
+        <h2 class="section-title">🎓 Your Training Modules</h2>
+
+        <div class="modules-grid">
+            <!-- Module 1 -->
+            <div class="module-card">
+                <div class="module-header" onclick="toggleModule(1)">
+                    <div class="module-number">1</div>
+                    <div class="module-info">
+                        <h3>Finding Your Profitable Niche</h3>
+                        <p>Discover the perfect niche that aligns with your passion and pays well</p>
+                    </div>
+                    <div class="module-status">
+                        <span class="status-badge in-progress">In Progress</span>
+                        <span style="color: #718096; font-size: 14px;">2/5 lessons</span>
+                    </div>
+                </div>
+                <div class="module-lessons" id="module-1">
+                    <div class="lesson-item" onclick="playLesson('1.1')">
+                        <span class="lesson-icon">✅</span>
+                        <div class="lesson-info">
+                            <h4>Welcome & Overview</h4>
+                            <p>What to expect from this program</p>
+                        </div>
+                        <span class="lesson-duration">12 min</span>
+                    </div>
+                    <div class="lesson-item" onclick="playLesson('1.2')">
+                        <span class="lesson-icon">✅</span>
+                        <div class="lesson-info">
+                            <h4>The Niche Formula</h4>
+                            <p>How to find your perfect niche</p>
+                        </div>
+                        <span class="lesson-duration">24 min</span>
+                    </div>
+                    <div class="lesson-item" onclick="playLesson('1.3')">
+                        <span class="lesson-icon">▶️</span>
+                        <div class="lesson-info">
+                            <h4>Market Research Strategies</h4>
+                            <p>Validate your niche idea</p>
+                        </div>
+                        <span class="lesson-duration">31 min</span>
+                    </div>
+                    <div class="lesson-item" onclick="playLesson('1.4')">
+                        <span class="lesson-icon">▶️</span>
+                        <div class="lesson-info">
+                            <h4>Competitive Analysis</h4>
+                            <p>Learn from successful competitors</p>
+                        </div>
+                        <span class="lesson-duration">19 min</span>
+                    </div>
+                    <div class="lesson-item" onclick="playLesson('1.5')">
+                        <span class="lesson-icon">▶️</span>
+                        <div class="lesson-info">
+                            <h4>Your Unique Value Proposition</h4>
+                            <p>Stand out from the crowd</p>
+                        </div>
+                        <span class="lesson-duration">22 min</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="module-card">
+                <div class="module-header" onclick="toggleModule(2)">
+                    <div class="module-number">2</div>
+                    <div class="module-info">
+                        <h3>Building Your Online Presence</h3>
+                        <p>Create a professional brand that attracts your ideal clients</p>
+                    </div>
+                    <div class="module-status">
+                        <span class="status-badge locked">🔒 Locked</span>
+                        <span style="color: #718096; font-size: 14px;">0/6 lessons</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="module-card">
+                <div class="module-header" onclick="toggleModule(3)">
+                    <div class="module-number">3</div>
+                    <div class="module-info">
+                        <h3>Creating Your First Product</h3>
+                        <p>Design and launch a product your audience will love</p>
+                    </div>
+                    <div class="module-status">
+                        <span class="status-badge locked">🔒 Locked</span>
+                        <span style="color: #718096; font-size: 14px;">0/7 lessons</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="module-card">
+                <div class="module-header" onclick="toggleModule(4)">
+                    <div class="module-number">4</div>
+                    <div class="module-info">
+                        <h3>Marketing & Sales Fundamentals</h3>
+                        <p>Master the art of attracting and converting customers</p>
+                    </div>
+                    <div class="module-status">
+                        <span class="status-badge locked">🔒 Locked</span>
+                        <span style="color: #718096; font-size: 14px;">0/8 lessons</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="module-card">
+                <div class="module-header" onclick="toggleModule(5)">
+                    <div class="module-number">5</div>
+                    <div class="module-info">
+                        <h3>Email Marketing Mastery</h3>
+                        <p>Build and nurture an email list that generates revenue</p>
+                    </div>
+                    <div class="module-status">
+                        <span class="status-badge locked">🔒 Locked</span>
+                        <span style="color: #718096; font-size: 14px;">0/6 lessons</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 6 -->
+            <div class="module-card">
+                <div class="module-header" onclick="toggleModule(6)">
+                    <div class="module-number">6</div>
+                    <div class="module-info">
+                        <h3>Scaling to 6-Figures</h3>
+                        <p>Advanced strategies for exponential growth</p>
+                    </div>
+                    <div class="module-status">
+                        <span class="status-badge locked">🔒 Locked</span>
+                        <span style="color: #718096; font-size: 14px;">0/9 lessons</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bonus Resources -->
+        <div class="bonus-section" id="resources">
+            <h2>🎁 Bonus Resources & Templates</h2>
+            <p>Download everything you need to succeed</p>
+
+            <div class="bonus-grid">
+                <div class="bonus-card">
+                    <h3>📄 Legal Templates</h3>
+                    <p>Contracts, terms, and policies</p>
+                    <a href="#" class="download-button" onclick="downloadResource('legal')">Download</a>
+                </div>
+                <div class="bonus-card">
+                    <h3>✉️ Email Swipe Files</h3>
+                    <p>Proven email templates</p>
+                    <a href="#" class="download-button" onclick="downloadResource('emails')">Download</a>
+                </div>
+                <div class="bonus-card">
+                    <h3>💰 Pricing Guide</h3>
+                    <p>How to price your services</p>
+                    <a href="#" class="download-button" onclick="downloadResource('pricing')">Download</a>
+                </div>
+                <div class="bonus-card">
+                    <h3>📊 Worksheets</h3>
+                    <p>Planning & tracking tools</p>
+                    <a href="#" class="download-button" onclick="downloadResource('worksheets')">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get user info from localStorage or cookie
+        const userEmail = localStorage.getItem('userEmail') || 'member@example.com';
+        const userName = localStorage.getItem('userName') || 'Member';
+
+        document.getElementById('welcome-name').textContent = userName.split(' ')[0];
+        document.getElementById('user-name').textContent = userName;
+        document.getElementById('user-avatar').textContent = userName.split(' ').map(n => n[0]).join('').toUpperCase();
+
+        function toggleModule(moduleNum) {
+            const moduleContent = document.getElementById(`module-${moduleNum}`);
+            if (moduleContent) {
+                moduleContent.classList.toggle('active');
+            }
+        }
+
+        function playLesson(lessonId) {
+            // Track lesson start
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'lesson_start', {
+                    'event_category': 'Training',
+                    'event_label': lessonId
+                });
+            }
+
+            alert(`Loading lesson ${lessonId}...\n\nIn production, this would open your video player with the lesson content.`);
+            // In production, redirect to video player: window.location.href = `lesson.html?id=${lessonId}`;
+        }
+
+        function openCommunity() {
+            window.open('https://facebook.com/groups/your-community', '_blank');
+        }
+
+        function scheduleCall() {
+            window.open('https://zoom.us/your-meeting-link', '_blank');
+        }
+
+        function getSupport() {
+            window.location.href = 'mailto:support@ttisuccess.com';
+        }
+
+        function downloadResource(type) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'download', {
+                    'event_category': 'Resources',
+                    'event_label': type
+                });
+            }
+
+            alert(`Downloading ${type} resources...\n\nIn production, this would trigger a download of your resource pack.`);
+            // In production: window.location.href = `/downloads/${type}.zip`;
+        }
+
+        // Track portal engagement
+        let timeOnPage = 0;
+        setInterval(() => {
+            timeOnPage++;
+            if (timeOnPage === 60 && typeof gtag !== 'undefined') {
+                gtag('event', 'engaged_user', {
+                    'event_category': 'Engagement',
+                    'event_label': '1_minute'
+                });
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
