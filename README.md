@@ -1,9 +1,8 @@
-# CEO Mr Reddix — Total Transformation Inc.
+# CEO Mr Reddix
 
-**Live store (only checkout):** https://aaronreddix1987-sketch.github.io/
+This GitHub Pages site is not the store.
 
-- Library: https://aaronreddix1987-sketch.github.io/ebooks.html
-- AI agents: https://aaronreddix1987-sketch.github.io/agents.html
-- Vault: https://aaronreddix1987-sketch.github.io/thank-you.html
+**Live library (send this only):**
+https://aaronreddix1987-sketch.github.io/ebooks.html
 
-This repo’s GitHub Pages URLs redirect to that store. Do not use this repo as a second website.
+The old product grid on this repo used one Stripe checkout for every title. That sent Recovery buyers to the wrong file. index.html now redirects to the live library.
