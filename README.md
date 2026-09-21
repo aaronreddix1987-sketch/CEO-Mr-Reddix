@@ -1,8 +1,11 @@
 # CEO Mr Reddix
 
-This GitHub Pages site is not the store.
+This repo is not the store.
 
-**Live library (send this only):**
-https://aaronreddix1987-sketch.github.io/ebooks.html
+**Only customer URL:** https://aaronreddix1987-sketch.github.io/
 
-The old product grid on this repo used one Stripe checkout for every title. That sent Recovery buyers to the wrong file. index.html now redirects to the live library.
+Library: https://aaronreddix1987-sketch.github.io/ebooks.html  
+Recovery: https://aaronreddix1987-sketch.github.io/recovery.html  
+Capacity project: https://aaronreddix1987-sketch.github.io/project.html
+
+Card only. No email tickets. No Chime.
